@@ -24,7 +24,7 @@
 
 #include "../../../../inc/MarlinConfigPre.h"
 
-#if HAS_DGUS_LCD
+#if ENABLED(DGUS_LCD_UI_CLASSIC)
 
 #if HOTENDS > 2
   #error "More than 2 hotends not implemented on the Display UI design."
@@ -1352,4 +1352,4 @@ void DGUSDisplay::WritePGM(const char str[], uint8_t len) {
 // A SW memory barrier, to ensure GCC does not overoptimize loops
 #define sw_barrier() asm volatile("": : :"memory");
 
-#endif // HAS_DGUS_LCD
+#endif // DGUS_LCD_UI_CLASSIC

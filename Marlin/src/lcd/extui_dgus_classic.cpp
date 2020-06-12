@@ -21,14 +21,14 @@
  */
 
 /**
- * extui_dgus_lcd.cpp
+ * extui_dgus_classic.cpp
  *
  * DGUS implementation for Marlin by coldtobi, Feb-May 2019
  */
 
 #include "../inc/MarlinConfigPre.h"
 
-#if HAS_DGUS_LCD
+#if ENABLED(DGUS_LCD_UI_CLASSIC)
 
 #include "extui/ui_api.h"
 #include "extui/lib/dgus/DGUSDisplay.h"
@@ -153,4 +153,4 @@ namespace ExtUI {
   #endif
 
 }
-#endif // HAS_DGUS_LCD
+#endif // DGUS_LCD_UI_CLASSIC
