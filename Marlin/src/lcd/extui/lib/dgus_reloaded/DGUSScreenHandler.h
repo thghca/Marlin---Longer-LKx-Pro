@@ -86,6 +86,8 @@ public:
 
   static bool IsPrinterIdle();
 
+  static uint8_t debug_count;
+
   #if ENABLED(SDSUPPORT)
     static ExtUI::FileList filelist;
     static uint16_t filelist_offset;

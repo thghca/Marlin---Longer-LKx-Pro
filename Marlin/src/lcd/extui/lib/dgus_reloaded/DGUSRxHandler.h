@@ -93,6 +93,8 @@ namespace DGUSRxHandler {
 
   void Brightness(DGUS_VP &, void *);
 
+  void Debug(DGUS_VP &, void *);
+
   void StringToExtra(DGUS_VP &, void *);
 
   template<typename T>

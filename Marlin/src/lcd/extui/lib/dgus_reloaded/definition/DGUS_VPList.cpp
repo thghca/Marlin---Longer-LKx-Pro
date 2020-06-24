@@ -359,6 +359,7 @@ const struct DGUS_VP vp_list[] PROGMEM = {
   // SPECIAL CASES
 
   VP_HELPER_TX(DGUS_Addr::STATUS_Percent_Complete, &DGUSTxHandler::Percent),
+  VP_HELPER_RX_NODATA(DGUS_Addr::INFOS_Debug, &DGUSRxHandler::Debug),
 
   VP_HELPER((DGUS_Addr)0, 0, VPFLAG_NONE, nullptr, nullptr, nullptr)
 

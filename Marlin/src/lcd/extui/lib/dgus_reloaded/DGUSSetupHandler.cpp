@@ -181,4 +181,10 @@ bool DGUSSetupHandler::PID() {
   return true;
 }
 
+bool DGUSSetupHandler::Infos() {
+  dgus_screen_handler.debug_count = 0;
+
+  return true;
+}
+
 #endif // DGUS_LCD_UI_RELOADED

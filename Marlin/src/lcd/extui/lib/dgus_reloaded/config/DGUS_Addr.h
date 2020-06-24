@@ -168,5 +168,6 @@ enum class DGUS_Addr : uint16_t {
   // SPECIAL CASES
 
   STATUS_Percent_Complete   = 0x5000, // Same as STATUS_Percent, but always 100%
+  INFOS_Debug               = 0x5001,
 
 };

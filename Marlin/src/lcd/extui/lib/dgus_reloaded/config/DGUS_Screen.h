@@ -45,6 +45,7 @@ enum class DGUS_Screen : uint8_t {
   VOLUME              = 20,
   BRIGHTNESS          = 21,
   INFOS               = 22,
+  DEBUG               = 240,
   POWERLOSS           = 248,
   WAIT                = 249,
   KILL                = 250

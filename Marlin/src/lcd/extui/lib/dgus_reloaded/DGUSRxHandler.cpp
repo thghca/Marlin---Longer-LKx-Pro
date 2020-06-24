@@ -1020,6 +1020,17 @@ void DGUSRxHandler::Brightness(DGUS_VP &vp, void *data_ptr) {
   dgus_screen_handler.TriggerEEPROMSave();
 }
 
+void DGUSRxHandler::Debug(DGUS_VP &vp, void *data_ptr) {
+  UNUSED(vp);
+  UNUSED(data_ptr);
+
+  ++dgus_screen_handler.debug_count;
+
+  if (dgus_screen_handler.debug_count >= 10) {
+    dgus_screen_handler.TriggerScreenChange(DGUS_Screen::DEBUG);
+  }
+}
+
 void DGUSRxHandler::StringToExtra(DGUS_VP &vp, void *data_ptr) {
   if (!vp.size || !vp.extra) return;
   memcpy(vp.extra, data_ptr, vp.size);

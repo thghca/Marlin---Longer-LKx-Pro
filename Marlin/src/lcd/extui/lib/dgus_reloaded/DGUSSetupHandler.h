@@ -37,5 +37,6 @@ namespace DGUSSetupHandler {
   bool Move();
   bool Gcode();
   bool PID();
+  bool Infos();
 
 }

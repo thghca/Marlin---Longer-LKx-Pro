@@ -48,6 +48,7 @@ const struct DGUS_ScreenSetup screen_setup_list[] PROGMEM = {
   SETUP_HELPER(DGUS_Screen::MOVE,               &DGUSSetupHandler::Move),
   SETUP_HELPER(DGUS_Screen::GCODE,              &DGUSSetupHandler::Gcode),
   SETUP_HELPER(DGUS_Screen::PID,                &DGUSSetupHandler::PID),
+  SETUP_HELPER(DGUS_Screen::INFOS,              &DGUSSetupHandler::Infos),
 
   SETUP_HELPER((DGUS_Screen)0, nullptr)
 };

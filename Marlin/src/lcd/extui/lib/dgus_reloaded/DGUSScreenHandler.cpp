@@ -32,6 +32,8 @@
 
 #include "../../../../gcode/queue.h"
 
+uint8_t DGUSScreenHandler::debug_count = 0;
+
 #if ENABLED(SDSUPPORT)
   ExtUI::FileList DGUSScreenHandler::filelist;
   uint16_t DGUSScreenHandler::filelist_offset = 0;
