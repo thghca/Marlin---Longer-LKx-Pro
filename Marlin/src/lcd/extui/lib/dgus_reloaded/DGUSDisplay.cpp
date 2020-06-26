@@ -39,6 +39,9 @@ long map_precise(float x, long in_min, long in_max, long out_min, long out_max) 
   return LROUND((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
 }
 
+uint8_t DGUSDisplay::gui_version = 0;
+uint8_t DGUSDisplay::os_version = 0;
+
 uint8_t DGUSDisplay::volume = 255;
 uint8_t DGUSDisplay::brightness = 100;
 
@@ -53,6 +56,14 @@ void DGUSDisplay::Loop() {
 
 void DGUSDisplay::Init() {
   DGUS_SERIAL.begin(DGUS_BAUDRATE);
+
+  Read(DGUS_VERSION, 1);
+}
+
+void DGUSDisplay::Read(uint16_t addr, uint8_t size) {
+  WriteHeader(addr, DGUS_READVAR, size);
+
+  DGUS_SERIAL.write(size);
 }
 
 void DGUSDisplay::Write(uint16_t addr, const void* data_ptr, uint8_t size) {
@@ -277,6 +288,14 @@ void DGUSDisplay::ProcessRx() {
           const uint16_t addr = tmp[0] << 8 | tmp[1];
           const uint8_t dlen = tmp[2] << 1;  // Convert to Bytes. (Display works with words)
           DEBUG_ECHOPAIR("addr=", addr, " dlen=", dlen, "> ");
+
+          if (addr == DGUS_VERSION && dlen == 2) {
+            DEBUG_ECHOLNPGM("VERSIONS");
+            gui_version = tmp[3];
+            os_version = tmp[4];
+            rx_datagram_state = DGUS_IDLE;
+            break;
+          }
 
           DGUS_VP vp;
           if (!DGUS_PopulateVP((DGUS_Addr)addr, &vp)) {

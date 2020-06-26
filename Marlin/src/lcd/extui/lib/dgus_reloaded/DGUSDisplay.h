@@ -55,6 +55,7 @@ public:
 
   static void Init();
 
+  static void Read(uint16_t addr, uint8_t size);
   static void Write(uint16_t addr, const void* data_ptr, uint8_t size);
 
   static void WriteString(uint16_t addr, const void* data_ptr, uint8_t size, bool left = true, bool right = false, bool use_space = true);
@@ -101,6 +102,9 @@ public:
     return initialized;
   }
 
+  static uint8_t gui_version;
+  static uint8_t os_version;
+
   template<typename T>
   static T SwapBytes(const T value) {
     union {
@@ -139,6 +143,10 @@ private:
     DGUS_HEADER1_SEEN,   //< DGUS_HEADER1 received
     DGUS_HEADER2_SEEN,   //< DGUS_HEADER2 received
     DGUS_WAIT_TELEGRAM,  //< LEN received, Waiting for to receive all bytes.
+  };
+
+  enum dgus_system_addr : uint16_t {
+    DGUS_VERSION = 0x000f // OS/GUI version
   };
 
   static void WriteHeader(uint16_t addr, uint8_t command, uint8_t len);

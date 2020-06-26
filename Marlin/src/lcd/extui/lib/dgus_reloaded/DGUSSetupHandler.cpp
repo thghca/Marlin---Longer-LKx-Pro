@@ -171,6 +171,11 @@ bool DGUSSetupHandler::Move() {
 bool DGUSSetupHandler::Gcode() {
   ZERO(dgus_screen_handler.gcode);
 
+  if (dgus_display.gui_version < 0x30 || dgus_display.os_version < 0x21) {
+    dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_FW_OUTDATED);
+    return false;
+  }
+
   return true;
 }
 
