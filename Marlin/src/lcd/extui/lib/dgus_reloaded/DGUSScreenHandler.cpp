@@ -78,7 +78,7 @@ const char DGUS_CMD_HOME[] PROGMEM = "G28",
 void DGUSScreenHandler::Init() {
   dgus_display.Init();
 
-  MoveToScreen(DGUS_Screen::BOOT);
+  MoveToScreen(DGUS_Screen::BOOT, true);
 }
 
 void DGUSScreenHandler::Ready() {
@@ -325,7 +325,7 @@ void DGUSScreenHandler::FilamentRunout(const ExtUI::extruder_t extruder) {
 #if ENABLED(POWER_LOSS_RECOVERY)
 
   void DGUSScreenHandler::PowerLossResume() {
-    TriggerScreenChange(DGUS_Screen::POWERLOSS);
+    MoveToScreen(DGUS_Screen::POWERLOSS, true);
   }
 
 #endif // POWER_LOSS_RECOVERY
