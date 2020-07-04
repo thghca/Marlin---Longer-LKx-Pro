@@ -260,6 +260,7 @@ void DGUSRxHandler::Babystep(DGUS_VP &vp, void *data_ptr) {
   int16_t steps;
 
   switch (adjust) {
+    default: return;
     case DGUS_Data::Adjust::INCREMENT:
       steps = ExtUI::mmToWholeSteps(DGUS_PRINT_BABYSTEP, ExtUI::Z);
       break;
@@ -681,6 +682,7 @@ void DGUSRxHandler::MoveStep(DGUS_VP &vp, void *data_ptr) {
   ExtUI::axis_t axis;
 
   switch (direction) {
+    default: return;
     case DGUS_Data::MoveDirection::XP:
       axis = ExtUI::X;
       break;
