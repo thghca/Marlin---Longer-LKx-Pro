@@ -291,7 +291,7 @@ void DGUSScreenHandler::PrintTimerStopped() {
 }
 
 void DGUSScreenHandler::FilamentRunout(const ExtUI::extruder_t extruder) {
-  char buffer[20];
+  char buffer[21];
   snprintf_P(buffer, sizeof(buffer), PSTR("Filament runout E%d"), extruder);
 
   SetStatusMessage(buffer);
