@@ -43,6 +43,7 @@ const struct DGUS_ScreenSetup screen_setup_list[] PROGMEM = {
   SETUP_HELPER(DGUS_Screen::LEVELING_MENU,      &DGUSSetupHandler::LevelingMenu),
   SETUP_HELPER(DGUS_Screen::LEVELING_OFFSET,    &DGUSSetupHandler::LevelingOffset),
   SETUP_HELPER(DGUS_Screen::LEVELING_MANUAL,    &DGUSSetupHandler::LevelingManual),
+  SETUP_HELPER(DGUS_Screen::LEVELING_AUTOMATIC, &DGUSSetupHandler::LevelingAutomatic),
   SETUP_HELPER(DGUS_Screen::LEVELING_PROBING,   &DGUSSetupHandler::LevelingProbing),
   SETUP_HELPER(DGUS_Screen::FILAMENT,           &DGUSSetupHandler::Filament),
   SETUP_HELPER(DGUS_Screen::MOVE,               &DGUSSetupHandler::Move),

@@ -32,6 +32,7 @@ namespace DGUSSetupHandler {
   bool LevelingMenu();
   bool LevelingOffset();
   bool LevelingManual();
+  bool LevelingAutomatic();
   bool LevelingProbing();
   bool Filament();
   bool Move();

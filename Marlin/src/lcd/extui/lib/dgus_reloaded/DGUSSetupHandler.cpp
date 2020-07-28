@@ -65,6 +65,8 @@ bool DGUSSetupHandler::PrintAdjust() {
 }
 
 bool DGUSSetupHandler::LevelingMenu() {
+  ExtUI::setLevelingActive(dgus_screen_handler.leveling_active);
+
   if (!dgus_screen_handler.IsPrinterIdle()) {
     dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_BUSY);
     return false;
@@ -90,6 +92,8 @@ bool DGUSSetupHandler::LevelingMenu() {
 }
 
 bool DGUSSetupHandler::LevelingManual() {
+  ExtUI::setLevelingActive(false);
+
   if (ExtUI::isPositionKnown()) {
     return true;
   }
@@ -111,6 +115,8 @@ bool DGUSSetupHandler::LevelingManual() {
 }
 
 bool DGUSSetupHandler::LevelingOffset() {
+  ExtUI::setLevelingActive(false);
+
   dgus_screen_handler.offset_steps = DGUS_Data::StepSize::MMP1;
 
   if (!dgus_screen_handler.IsPrinterIdle()) {
@@ -141,6 +147,16 @@ bool DGUSSetupHandler::LevelingOffset() {
   queue.enqueue_now_P(DGUS_CMD_HOME);
 
   return false;
+}
+
+bool DGUSSetupHandler::LevelingAutomatic() {
+  if (ExtUI::getMeshValid()) {
+    dgus_screen_handler.leveling_active = true;
+
+    ExtUI::setLevelingActive(true);
+  }
+
+  return true;
 }
 
 bool DGUSSetupHandler::LevelingProbing() {

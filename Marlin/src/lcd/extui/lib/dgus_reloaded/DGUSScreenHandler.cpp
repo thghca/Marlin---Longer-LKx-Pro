@@ -64,6 +64,8 @@ bool DGUSScreenHandler::full_update = false;
 DGUS_Screen DGUSScreenHandler::wait_return_screen = DGUS_Screen::HOME;
 bool DGUSScreenHandler::wait_continue = false;
 
+bool DGUSScreenHandler::leveling_active = false;
+
 millis_t DGUSScreenHandler::status_expire = 0;
 millis_t DGUSScreenHandler::eeprom_save = 0;
 
@@ -217,8 +219,10 @@ void DGUSScreenHandler::LoadSettings(const char *buff) {
   dgus_display.SetVolume(data.initialized ? data.volume : DGUS_DEFAULT_VOLUME);
   dgus_display.SetBrightness(data.initialized ? data.brightness : DGUS_DEFAULT_BRIGHTNESS);
 
-  if (data.initialized && data.abl && ExtUI::getMeshValid()) {
-    ExtUI::setLevelingActive(true);
+  if (data.initialized) {
+    leveling_active = (data.abl && ExtUI::getMeshValid());
+
+    ExtUI::setLevelingActive(leveling_active);
   }
 }
 

@@ -110,6 +110,8 @@ public:
 
   static bool wait_continue;
 
+  static bool leveling_active;
+
 private:
   static const DGUS_Addr* FindScreenAddrList(DGUS_Screen screen);
   static bool CallScreenSetup(DGUS_Screen screen);
