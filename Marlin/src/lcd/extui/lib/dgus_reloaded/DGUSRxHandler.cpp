@@ -840,14 +840,14 @@ void DGUSRxHandler::PIDSetTemp(DGUS_VP &vp, void *data_ptr) {
   switch (dgus_screen_handler.pid_heater) {
     default: return;
     case DGUS_Data::Heater::BED:
-      temp = constrain(temp, BED_MINTEMP, (BED_MAXTEMP - 10));
+      temp = constrain(temp, BED_MINTEMP, BED_MAX_TARGET);
       break;
     case DGUS_Data::Heater::H0:
-      temp = constrain(temp, HEATER_0_MINTEMP, (HEATER_0_MAXTEMP - 15));
+      temp = constrain(temp, HEATER_0_MINTEMP, (HEATER_0_MAXTEMP - HOTEND_OVERSHOOT));
       break;
     #if HOTENDS > 1
       case DGUS_Data::Heater::H1:
-        temp = constrain(temp, HEATER_1_MINTEMP, (HEATER_1_MAXTEMP - 15));
+        temp = constrain(temp, HEATER_1_MINTEMP, (HEATER_1_MAXTEMP - HOTEND_OVERSHOOT));
         break;
     #endif
   }

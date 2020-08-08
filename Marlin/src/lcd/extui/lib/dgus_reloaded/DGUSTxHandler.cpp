@@ -274,14 +274,14 @@ void DGUSTxHandler::TempMax(DGUS_VP &vp) {
   switch (vp.addr) {
     default: return;
     case DGUS_Addr::TEMP_Max_Bed:
-      temp = BED_MAXTEMP - 10;
+      temp = BED_MAX_TARGET;
       break;
     case DGUS_Addr::TEMP_Max_H0:
-      temp = HEATER_0_MAXTEMP - 15;
+      temp = HEATER_0_MAXTEMP - HOTEND_OVERSHOOT;
       break;
     #if HOTENDS > 1
       case DGUS_Addr::TEMP_Max_H1:
-        temp = HEATER_1_MAXTEMP - 15;
+        temp = HEATER_1_MAXTEMP - HOTEND_OVERSHOOT;
         break;
     #endif
   }
