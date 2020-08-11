@@ -246,8 +246,13 @@ void DGUSScreenHandler::ConfigurationStoreRead(bool success) {
 void DGUSScreenHandler::PlayTone(const uint16_t frequency, const uint16_t duration) {
   UNUSED(duration);
 
-  if (frequency >= 1 && frequency <= 64) {
-    dgus_display.PlaySound((uint8_t)frequency);
+  if (frequency >= 1 && frequency <= 255) {
+    if (duration >= 1 && duration <= 255) {
+      dgus_display.PlaySound((uint8_t)frequency, (uint8_t)duration);
+    }
+    else {
+      dgus_display.PlaySound((uint8_t)frequency);
+    }
   }
 }
 
