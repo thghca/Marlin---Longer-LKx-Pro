@@ -115,8 +115,6 @@ bool DGUSSetupHandler::LevelingManual() {
 }
 
 bool DGUSSetupHandler::LevelingOffset() {
-  ExtUI::setLevelingActive(false);
-
   dgus_screen_handler.offset_steps = DGUS_Data::StepSize::MMP1;
 
   if (!dgus_screen_handler.IsPrinterIdle()) {
