@@ -37,7 +37,7 @@
 #include "../../../../../module/temperature.h"
 
 const char DGUS_MACHINENAME[] PROGMEM = MACHINE_NAME;
-const char DGUS_MARLINVERSION[] PROGMEM = "2.0.5.3-r2"; // SHORT_BUILD_VERSION
+const char DGUS_MARLINVERSION[] PROGMEM = SHORT_BUILD_VERSION;
 
 #define VP_HELPER(ADDR, SIZE, FLAGS, EXTRA, RXHANDLER, TXHANDLER) \
   { .addr = ADDR, \
