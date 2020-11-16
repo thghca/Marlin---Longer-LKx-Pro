@@ -120,9 +120,15 @@ namespace ExtUI {
     dgus_screen_handler.ConfigurationStoreRead(success);
   }
 
-  void onMeshUpdate(const int8_t xpos, const int8_t ypos, const float zval) {
-    dgus_screen_handler.MeshUpdate(xpos, ypos, zval);
-  }
+  #if HAS_MESH
+    void onMeshUpdate(const int8_t xpos, const int8_t ypos, const float zval) {
+      dgus_screen_handler.MeshUpdate(xpos, ypos);
+    }
+
+    void onMeshUpdate(const int8_t xpos, const int8_t ypos, const ExtUI::probe_state_t state) {
+      dgus_screen_handler.MeshUpdate(xpos, ypos);
+    }
+  #endif
 
   #if ENABLED(POWER_LOSS_RECOVERY)
     void onPowerLossResume() {

@@ -47,7 +47,7 @@ public:
   static void ConfigurationStoreRead(bool success);
 
   static void PlayTone(const uint16_t frequency, const uint16_t duration);
-  static void MeshUpdate(const int8_t xpos, const int8_t ypos, const float zval);
+  static void MeshUpdate(const int8_t xpos, const int8_t ypos);
   static void PrintTimerStarted();
   static void PrintTimerPaused();
   static void PrintTimerStopped();

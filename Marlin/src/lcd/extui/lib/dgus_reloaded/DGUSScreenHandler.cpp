@@ -256,7 +256,7 @@ void DGUSScreenHandler::PlayTone(const uint16_t frequency, const uint16_t durati
   }
 }
 
-void DGUSScreenHandler::MeshUpdate(const int8_t xpos, const int8_t ypos, const float zval) {
+void DGUSScreenHandler::MeshUpdate(const int8_t xpos, const int8_t ypos) {
   if (current_screen != DGUS_Screen::LEVELING_PROBING) {
     if (current_screen == DGUS_Screen::LEVELING_AUTOMATIC) {
       TriggerFullUpdate();
