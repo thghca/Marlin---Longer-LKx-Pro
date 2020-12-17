@@ -178,7 +178,7 @@ void DGUSDisplay::EnableControl(DGUS_Screen screen, DGUS_ControlType type, DGUS_
   const uint8_t command[] = { 0x5A, 0xA5, 0x00, (uint8_t)screen, (uint8_t)control, type, 0x00, 0x01 };
   Write(0xB0, command, sizeof(command));
 
-  LCD_SERIAL.flushTX();
+  FlushTx();
   delay(50);
 }
 
@@ -188,7 +188,7 @@ void DGUSDisplay::DisableControl(DGUS_Screen screen, DGUS_ControlType type, DGUS
   const uint8_t command[] = { 0x5A, 0xA5, 0x00, (uint8_t)screen, (uint8_t)control, type, 0x00, 0x00 };
   Write(0xB0, command, sizeof(command));
 
-  LCD_SERIAL.flushTX();
+  FlushTx();
   delay(50);
 }
 
@@ -372,7 +372,11 @@ size_t DGUSDisplay::GetFreeTxBuffer() {
 }
 
 void DGUSDisplay::FlushTx() {
-  LCD_SERIAL.flushTX();
+  #ifdef ARDUINO_ARCH_STM32
+    LCD_SERIAL.flush();
+  #else
+    LCD_SERIAL.flushTX();
+  #endif
 }
 
 void DGUSDisplay::WriteHeader(uint16_t addr, uint8_t command, uint8_t len) {
