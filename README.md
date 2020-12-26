@@ -12,15 +12,14 @@ Please test this firmware and let us know if it misbehaves in any way. Volunteer
 
 ## Modifications
 
-The scope of modifications is limited to the integration of a new extensible UI library for DWIN T5UID1 touchscreens.
+Add LGT boards pinout definition for Aphawise & Longer U30/LK4/LK1 pro
 
-Core functionnality is, by design, left untouched from the upstream.
+Add specific French language file without accented characters for DWIN T5UID1 touchscreen
 
-The touchscreen firmware compatible with this fork is available in [this repository](https://github.com/Desuuuu/DGUS-reloaded).
+All other thing are forked from Desuuuu/Marlin :
 
-Example configurations are available in [this repository](https://github.com/Desuuuu/DGUS-reloaded-config).
+For more information please see [this repository] https://github.com/Desuuuu/Marlin
 
-Precompiled binaries might be available on the [Releases page](https://github.com/Desuuuu/Marlin/releases) using these example configurations.
 
 ## Marlin 2.0
 
