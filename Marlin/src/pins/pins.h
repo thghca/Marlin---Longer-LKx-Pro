@@ -97,7 +97,7 @@
 #elif MB(RAMPS_PLUS_SF)
   #include "ramps/pins_RAMPS_PLUS.h"            // ATmega1280, ATmega2560                 env:mega1280 env:mega2560
 #elif MB(LGT)
-  #include "ramps/pins_LGT.h"                         // LGT Board based on ATmego2560
+  #include "ramps/pins_LGT.h"                         // LGT Board based on ATmega2560
 //
 // RAMPS Derivatives - ATmega1280, ATmega2560
 //
