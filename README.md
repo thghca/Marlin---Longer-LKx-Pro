@@ -18,7 +18,7 @@ Add specific French language file without accented characters for DWIN T5UID1 to
 
 All other thing are forked from Desuuuu/Marlin :
 
-For more information please see [this repository] https://github.com/Desuuuu/Marlin
+For more information please see [this repository](https://github.com/Desuuuu/Marlin).
 
 
 ## Marlin 2.0
