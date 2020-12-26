@@ -55,7 +55,7 @@
 // eu         Basque-Euskera
 // fi         Finnish
 // fr         French
-// fr_na      French without accented character for DWIN DGUS Screen compatibilities
+// fr_na      French without accented character for DWIN T5UID1 touchscreen compatibilities 
 // gl         Galician
 // hr         Croatian
 // hu         Hungarian
