@@ -16,9 +16,7 @@ Add LGT boards pinout definition for Alphawise & Longer U30/LK4/LK1 pro
 
 Add specific French language file without accented characters for DWIN T5UID1 touchscreen
 
-All other thing are forked from Desuuuu/Marlin :
-
-For more information please see [this repository](https://github.com/Desuuuu/Marlin).
+All other thing are forked from Desuuuu/Marlin : For more information please see [this repository](https://github.com/Desuuuu/Marlin).
 
 
 ## Marlin 2.0
