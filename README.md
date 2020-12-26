@@ -12,7 +12,7 @@ Please test this firmware and let us know if it misbehaves in any way. Volunteer
 
 ## Modifications
 
-Add LGT boards pinout definition for Aphawise & Longer U30/LK4/LK1 pro
+Add LGT boards pinout definition for Alphawise & Longer U30/LK4/LK1 pro
 
 Add specific French language file without accented characters for DWIN T5UID1 touchscreen
 
