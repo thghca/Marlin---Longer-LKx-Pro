@@ -47,8 +47,8 @@
   #define IS_RAMPS_EEF
 #elif MB(RAMPS_13_SF,  RAMPS_14_SF,  RAMPS_PLUS_SF,  RAMPS_14_RE_ARM_SF,  RAMPS_SMART_SF,  RAMPS_DUO_SF,  RAMPS4DUE_SF)
   #define IS_RAMPS_SF
-#elif MB(LGT)        // david for LGT board integration
-	#define LGT_MAC
+#elif MB(LGT)        
+	#define LGT_MAC    //Alphawise/longer LGT V1.1 motherboard integration
 #endif
 
 #define HAS_FREE_AUX2_PINS !(BOTH(ULTRA_LCD, NEWPANEL) && ANY(PANEL_ONE, VIKI2, miniVIKI, MINIPANEL, REPRAPWORLD_KEYPAD))
@@ -97,8 +97,8 @@
 #elif MB(RAMPS_PLUS_SF)
   #include "ramps/pins_RAMPS_PLUS.h"            // ATmega1280, ATmega2560                 env:mega1280 env:mega2560
 #elif MB(LGT)
-  #include "ramps/pins_LGT.h"                         // LGT Board based on ATmega2560
-//
+  #include "ramps/pins_LGT.h"                   // Alphawise/longer LGT V1.1 motherboard integration
+
 // RAMPS Derivatives - ATmega1280, ATmega2560
 //
 
