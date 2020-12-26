@@ -21,7 +21,7 @@
  */
 
 /**
- * Alphawise Longer LGT motherboard pin assigment*
+ * Alphawise Longer LGT V1.1 motherboard pin assigment*
  *
  */
 
