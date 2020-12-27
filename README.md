@@ -18,6 +18,7 @@ Add specific French language file without accented characters for DWIN T5UID1 to
 
 All other thing are forked from Desuuuu/Marlin : For more information please see [this repository](https://github.com/Desuuuu/Marlin).
 
+Compliled MArlin for Longer LK4 pro with bltouch and specific Longer/alphawise verticale T5UID1 touchscreen firmware available [here](https://github.com/DaGr70/Marlin_Longer_LK4_pro/releases/tag/2.0.7.2)
 
 ## Marlin 2.0
 
