@@ -22,7 +22,7 @@
 #pragma once
 
 /**
- * French language modification (without accent)  for DWIN T5UID1 compatibility. DWIN Font not include french accented characters
+ * French language modification (without accent) for DWIN T5UID1 compatibility. DWIN Font not include french accented characters
  *
  * LCD Menu Messages
  * See also https://marlinfw.org/docs/development/lcd_language.html
