@@ -1147,7 +1147,7 @@
 
 #else
   #define X_BED_SIZE 220  // for LK4 pro
-  #define Y_BED_SIZE 200  // for LK4 pro
+  #define Y_BED_SIZE 220  // for LK4 pro
 #endif
 
 
