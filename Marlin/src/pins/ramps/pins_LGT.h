@@ -65,7 +65,7 @@
 #ifdef LK1_Pro_AutoBed
 	#define Z_MIN_PIN          11
 	#define Z_MAX_PIN          37
-#else //LK4_Pro
+#else //LK4_Pro & U30 pro
 	#define Z_MIN_PIN          35
 	#define Z_MAX_PIN          37
 #endif

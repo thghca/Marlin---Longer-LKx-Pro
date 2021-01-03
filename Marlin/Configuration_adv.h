@@ -1195,7 +1195,7 @@
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
    */
-  #define POWER_LOSS_RECOVERY  // For LK4 pro
+  #define POWER_LOSS_RECOVERY  //  For Alphawise and Longer U30 pro LK4 pro
   #if ENABLED(POWER_LOSS_RECOVERY)
     #define PLR_ENABLED_DEFAULT   false // Power Loss Recovery enabled by default. (Set with 'M413 Sn' & M500)
     //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
@@ -1437,7 +1437,7 @@
 //
 #if HAS_DGUS_LCD
 #if ENABLED(LGT_MAC)
-  #define LCD_SERIAL_PORT 1  // Serial port 1 for LK4 pro
+  #define LCD_SERIAL_PORT 1  // Serial port 1 for Alphawise and Longer with LGT moterboard
 #else
   #define LCD_SERIAL_PORT 3
 #endif
@@ -1607,7 +1607,7 @@
  *
  * Warning: Does not respect endstops!
  */
-#define BABYSTEPPING   // lk4 pro with bltouch
+#define BABYSTEPPING   //  For Alphawise and Longer U30 pro LK4 pro
 #if ENABLED(BABYSTEPPING)
   //#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
   //#define BABYSTEP_WITHOUT_HOMING

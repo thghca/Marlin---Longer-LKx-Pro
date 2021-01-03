@@ -94,8 +94,9 @@
 //#define CUSTOM_STATUS_SCREEN_IMAGE
 
 // @section machine
-#define LGT_MAC	 //  for LK4pro
+#define LGT_MAC	 //  For Alphawise and Longer U30 pro LK4 pro
 #define LK4_Pro  //  for LK4pro
+//#define LK1_pro
 
 
 /**
@@ -130,11 +131,11 @@
 
 // Choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD 1050  //for lk4 pro pinout integration
+  #define MOTHERBOARD 1050  //  For Alphawise and Longer U30 pro LK4 pro with LGT motherboard
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
-//#define CUSTOM_MACHINE_NAME "3D Printer"
+#define CUSTOM_MACHINE_NAME "3D Printer"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
@@ -426,7 +427,7 @@
 #define TEMP_SENSOR_5 0
 #define TEMP_SENSOR_6 0
 #define TEMP_SENSOR_7 0
-#define TEMP_SENSOR_BED 1  // lk4 pro had a bed sensor
+#define TEMP_SENSOR_BED 1  // For Alphawise and Longer U30 pro LK4 pro
 #define TEMP_SENSOR_PROBE 0
 #define TEMP_SENSOR_CHAMBER 0
 
@@ -663,13 +664,13 @@
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-#define X_MIN_ENDSTOP_INVERTING true // David for LK4 pro
-#define Y_MIN_ENDSTOP_INVERTING true // David for LK4 pro
-#define Z_MIN_ENDSTOP_INVERTING true // David for LK4 pro
+#define X_MIN_ENDSTOP_INVERTING true //  For Alphawise and Longer U30 pro LK4 pro
+#define Y_MIN_ENDSTOP_INVERTING true //  For Alphawise and Longer U30 pro LK4 pro
+#define Z_MIN_ENDSTOP_INVERTING true //  For Alphawise and Longer U30 pro LK4 proo
 #define X_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define Y_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-#define Z_MIN_PROBE_ENDSTOP_INVERTING false  // David for LK4 pro
+#define Z_MIN_PROBE_ENDSTOP_INVERTING false  //  For Alphawise and Longer U30 pro LK4 pro
 
 /**
  * Stepper Drivers
@@ -687,15 +688,15 @@
  *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
  * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'L6470', 'L6474', 'POWERSTEP01', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
  */
-#define X_DRIVER_TYPE  TMC2208_STANDALONE   // for longer lk4 pro
-#define Y_DRIVER_TYPE  TMC2208_STANDALONE   // for longer lk4 pro
-#define Z_DRIVER_TYPE  TMC2208_STANDALONE   // for longer lk4 pro
+#define X_DRIVER_TYPE  TMC2208_STANDALONE   //  For Alphawise and Longer U30 pro LK4 pro
+#define Y_DRIVER_TYPE  TMC2208_STANDALONE   //  For Alphawise and Longer U30 pro LK4 pro
+#define Z_DRIVER_TYPE  TMC2208_STANDALONE   //  For Alphawise and Longer U30 pro LK4 pro
 //#define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
 //#define Z2_DRIVER_TYPE A4988
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
-#define E0_DRIVER_TYPE A4988                // for longer lk4 pro
+#define E0_DRIVER_TYPE A4988                //  For Alphawise and Longer U30 pro LK4 pro
 //#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
@@ -912,7 +913,7 @@
 /**
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
  */
-#define BLTOUCH   // for LK4 pro with BLtouch
+#define BLTOUCH   //  For Alphawise and Longer U30 pro LK4 pro with BLtouch
 
 /**
  * Pressure sensor with a BLTouch-like interface
@@ -1000,7 +1001,7 @@
  *     O-- FRONT --+
  */
 
-#define NOZZLE_TO_PROBE_OFFSET { -33, -5, 0 }  // Value For LK4 with BLtouch support => https://www.thingiverse.com/thing:4261004
+#define NOZZLE_TO_PROBE_OFFSET { -33, -5, 0 }  // Value for Alphawise and Longer U30 pro LK4 pro  with BLtouch support => https://www.thingiverse.com/thing:4261004
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
@@ -1100,13 +1101,13 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR true  // false  -> david for Lk4 pro
-#define INVERT_Y_DIR false // true -> david for Lk4 pro
-#define INVERT_Z_DIR true // false -> David for LK4 pro
+#define INVERT_X_DIR true  //  For Alphawise and Longer U30 pro LK4 pro
+#define INVERT_Y_DIR false //  For Alphawise and Longer U30 pro LK4 pro
+#define INVERT_Z_DIR true //  For Alphawise and Longer U30 pro LK4 pro
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR true // false David for LK4 pro
+#define INVERT_E0_DIR true //  For Alphawise and Longer U30 pro LK4 pro
 #ifdef LK1_Pro
   #define INVERT_E0_DIR false
 #else
@@ -1142,12 +1143,12 @@
 
 // The size of the print bed
 #ifdef LK1_Pro
-	#define X_BED_SIZE 300 // for LK4 pro /for LK1 pro
-	#define Y_BED_SIZE 300 // for LK4 pro
+	#define X_BED_SIZE 300 // for LK1 pro
+	#define Y_BED_SIZE 300 // for LK1 pro
 
 #else
-  #define X_BED_SIZE 220  // for LK4 pro
-  #define Y_BED_SIZE 220  // for LK4 pro
+  #define X_BED_SIZE 220  //  For Alphawise and Longer U30 pro LK4 pro
+  #define Y_BED_SIZE 220  //  For Alphawise and Longer U30 pro LK4 pro
 #endif
 
 
@@ -1161,7 +1162,7 @@
 #ifdef LK1_Pro
   #define Z_MAX_POS 200  // for LK1 pro
 #else
-  #define Z_MAX_POS 250   // for LK4 pro
+  #define Z_MAX_POS 250   //  For Alphawise and Longer U30 pro LK4 pro
 #endif
 
 /**
@@ -1200,7 +1201,7 @@
  * RAMPS-based boards use SERVO3_PIN for the first runout sensor.
  * For other boards you may need to define FIL_RUNOUT_PIN, FIL_RUNOUT2_PIN, etc.
  */
-#define FILAMENT_RUNOUT_SENSOR   // lk4 pro had a filament runout sensor
+#define FILAMENT_RUNOUT_SENSOR   //  had a filament runout sensor
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #define FIL_RUNOUT_ENABLED_DEFAULT true // Enable the sensor on startup. Override with M412 followed by M500.
   #define NUM_RUNOUT_SENSORS   1          // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
@@ -1210,7 +1211,7 @@
 
   // Set one or more commands to execute on filament runout.
   // (After 'M412 H' Marlin will ask the host to handle the process.)
-  #define FILAMENT_RUNOUT_SCRIPT "M25" // "M600"  ->David for LK4 pro
+  #define FILAMENT_RUNOUT_SCRIPT "M25" // "M600"  -> For Alphawise and Longer U30 pro LK4 pro
 
   // After a runout is detected, continue printing this length of filament
   // before executing the runout script. Useful for a sensor at the end of
@@ -1265,7 +1266,7 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-#define AUTO_BED_LEVELING_BILINEAR  // for LK4 pro with BLtouch
+#define AUTO_BED_LEVELING_BILINEAR  //  For Alphawise and Longer U30 pro LK4 pro with BLtouch
 //#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
@@ -1312,7 +1313,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 5  // for compatibilities with LK4 DWIN Screen firmware
+  #define GRID_MAX_POINTS_X 5  // for compatibilities with DWIN Screen firmware
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -1416,7 +1417,7 @@
 // - Move the Z probe (or nozzle) to a defined XY point before Z Homing.
 // - Prevent Z homing when the Z probe is outside bed area.
 //
-#define Z_SAFE_HOMING  // For LK4 with Bltouch
+#define Z_SAFE_HOMING  //  For Alphawise and Longer U30 pro LK4 pro with Bltouch
 
 #if ENABLED(Z_SAFE_HOMING)
   #define Z_SAFE_HOMING_X_POINT X_CENTER  // X point for Z homing
@@ -1755,7 +1756,7 @@
  * SD Card support is disabled by default. If your controller has an SD slot,
  * you must uncomment the following option or it won't work.
  */
-#define SDSUPPORT   // for LK4 pro
+#define SDSUPPORT   //  For Alphawise and Longer U30 pro LK4 pro
 
 /**
  * SD CARD: SPI SPEED
