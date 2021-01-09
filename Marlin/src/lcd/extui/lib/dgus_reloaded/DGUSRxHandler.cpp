@@ -499,6 +499,11 @@ void DGUSRxHandler::Probe(DGUS_VP &vp, void *data_ptr) {
   UNUSED(vp);
   UNUSED(data_ptr);
 
+  #if ENABLED(MESH_BED_LEVELING)
+    dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_ABL_REQUIRED);
+    return;
+  #endif
+
   if (!ExtUI::isPositionKnown()) {
     dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_HOMING_REQUIRED);
     return;
@@ -511,7 +516,11 @@ void DGUSRxHandler::Probe(DGUS_VP &vp, void *data_ptr) {
 
   dgus_screen_handler.TriggerScreenChange(DGUS_Screen::LEVELING_PROBING);
 
-  queue.enqueue_now_P(PSTR("G29\nM420S1"));
+  #if ENABLED(AUTO_BED_LEVELING_UBL)
+    queue.enqueue_now_P(PSTR("G29P1\nG29P3\nG29P5C"));
+  #else
+    queue.enqueue_now_P(PSTR("G29"));
+  #endif
   queue.enqueue_now_P(DGUS_CMD_EEPROM_SAVE);
 }
 
