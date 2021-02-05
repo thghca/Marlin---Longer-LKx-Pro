@@ -46,15 +46,26 @@ void DGUSRxHandler::ScreenChange(DGUS_VP &vp, void *data_ptr)
 {
   const DGUS_Screen screen = (DGUS_Screen)((uint8_t *)data_ptr)[1];
 
-  if (vp.addr == DGUS_Addr::SCREENCHANGE_SD
-#if ENABLED(SDSUPPORT)
-      && !ExtUI::isMediaInserted()
-#endif
-  )
-  {
-    dgus_screen_handler.SetStatusMessagePGM(GET_TEXT(MSG_NO_MEDIA));
-    return;
+  if (vp.addr == DGUS_Addr::SCREENCHANGE_SD){
+    #if ENABLED(SDSUPPORT)
+        #if !PIN_EXISTS(SD_DETECT)
+        card.mount();
+      #endif
+
+      if (!ExtUI::isMediaInserted()) {
+        dgus_screen_handler.SetStatusMessagePGM(GET_TEXT(MSG_NO_MEDIA));
+        return;
+      }
+
+      card.cdroot();
+    #else
+      dgus_screen_handler.SetStatusMessagePGM(GET_TEXT(MSG_NO_MEDIA));
+      return;
+    #endif
+
   }
+
+  
 
   if (vp.addr == DGUS_Addr::SCREENCHANGE_Idle && (printingIsActive() || printingIsPaused()))
   {
@@ -399,7 +410,7 @@ void DGUSRxHandler::TempCool(DGUS_VP &vp, void *data_ptr)
 #endif
   }
 
-  dgus_screen_handler.SetStatusMessagePGM(PSTR("Refroidissemnt..."));
+  dgus_screen_handler.SetStatusMessagePGM(PSTR("Refroidissement..."));
 
   dgus_screen_handler.TriggerFullUpdate();
 }
