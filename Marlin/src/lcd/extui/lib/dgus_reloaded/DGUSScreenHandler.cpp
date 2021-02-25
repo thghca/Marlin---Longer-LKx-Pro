@@ -347,7 +347,7 @@ void DGUSScreenHandler::FilamentRunout(const ExtUI::extruder_t extruder) {
   void DGUSScreenHandler::PidTuning(const ExtUI::result_t rst) {
     switch (rst) {
       case ExtUI::PID_DONE:
-        SetStatusMessagePGM(PSTR("Autocalibrage du PID reussi."));
+        SetStatusMessagePGM(GET_TEXT(MSG_PID_AUTOTUNE_DONE));
         break;
       case ExtUI::PID_BAD_EXTRUDER_NUM:
         SetStatusMessagePGM(PSTR("Buse inconnue"));

@@ -1023,7 +1023,7 @@ void DGUSRxHandler::PIDRun(DGUS_VP &vp, void *data_ptr)
   snprintf_P(buffer, sizeof(buffer), PSTR("M303C%dE%dS%dU1"), cycles, heater, dgus_screen_handler.pid_temp);
 
   dgus_screen_handler.SetMessageLinePGM(NUL_STR, 1);
-  dgus_screen_handler.SetMessageLinePGM(PSTR("Autocalibrage du PID..."), 2);
+  dgus_screen_handler.SetMessageLinePGM(GET_TEXT(MSG_PID_AUTOTUNE), 2);
   dgus_screen_handler.SetMessageLinePGM(NUL_STR, 3);
   dgus_screen_handler.SetMessageLinePGM(NUL_STR, 4);
   dgus_screen_handler.ShowWaitScreen(DGUS_Screen::PID);
