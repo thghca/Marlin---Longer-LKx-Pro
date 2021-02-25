@@ -2294,6 +2294,7 @@ static_assert(hbm[Z_AXIS] >= 0, "HOMING_BUMP_MM.Z must be greater than or equal 
   + ENABLED(DGUS_LCD_UI_ORIGIN) \
   + ENABLED(DGUS_LCD_UI_FYSETC) \
   + ENABLED(DGUS_LCD_UI_HIPRECY) \
+  + ENABLED(DGUS_LCD_UI_RELOADED) \
   + ENABLED(MALYAN_LCD) \
   + ENABLED(TOUCH_UI_FTDI_EVE) \
   + ENABLED(TFT_320x240) \
@@ -3198,3 +3199,28 @@ static_assert(   _ARR_TEST(3,0) && _ARR_TEST(3,1) && _ARR_TEST(3,2)
 
 // Misc. Cleanup
 #undef _TEST_PWM
+
+/**
+ * Require certain features for DGUS_LCD_UI_RELOADED.
+ */
+#if ENABLED(DGUS_LCD_UI_RELOADED)
+  #if HOTENDS < 1
+    #error "DGUS_LCD_UI_RELOADED requires at least 1 hotend."
+  #elif EXTRUDERS < 1
+    #error "DGUS_LCD_UI_RELOADED requires at least 1 extruder."
+  #elif !HAS_HEATED_BED
+    #error "DGUS_LCD_UI_RELOADED requires a heated bed."
+  #elif FAN_COUNT < 1
+    #error "DGUS_LCD_UI_RELOADED requires a fan."
+  #elif !HAS_BED_PROBE
+    #error "DGUS_LCD_UI_RELOADED requires a bed probe."
+  #elif !HAS_MESH
+    #error "DGUS_LCD_UI_RELOADED requires mesh leveling."
+  #elif DISABLED(LEVEL_BED_CORNERS)
+    #error "DGUS_LCD_UI_RELOADED requires LEVEL_BED_CORNERS."
+  #elif DISABLED(BABYSTEP_ALWAYS_AVAILABLE)
+    #error "DGUS_LCD_UI_RELOADED requires BABYSTEP_ALWAYS_AVAILABLE."
+  #elif DISABLED(BABYSTEP_ZPROBE_OFFSET)
+    #error "DGUS_LCD_UI_RELOADED requires BABYSTEP_ZPROBE_OFFSET."
+  #endif
+#endif

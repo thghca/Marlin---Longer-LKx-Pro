@@ -474,6 +474,10 @@
 
 // Aliases for LCD features
 #if ANY(DGUS_LCD_UI_ORIGIN, DGUS_LCD_UI_FYSETC, DGUS_LCD_UI_HIPRECY)
+  #define DGUS_LCD_UI_CLASSIC
+#endif
+
+#if ANY(DGUS_LCD_UI_CLASSIC, DGUS_LCD_UI_RELOADED)
   #define HAS_DGUS_LCD 1
 #endif
 

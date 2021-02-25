@@ -28,7 +28,7 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
-#if HAS_DGUS_LCD
+#if ENABLED(DGUS_LCD_UI_CLASSIC)
 
 #include "ui_api.h"
 #include "lib/dgus/DGUSDisplay.h"
@@ -147,4 +147,4 @@ namespace ExtUI {
   #endif
 
 }
-#endif // HAS_DGUS_LCD
+#endif // DGUS_LCD_UI_CLASSIC

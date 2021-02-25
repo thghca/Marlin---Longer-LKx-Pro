@@ -10,6 +10,17 @@
 Additional documentation can be found at the [Marlin Home Page](https://marlinfw.org/).
 Please test this firmware and let us know if it misbehaves in any way. Volunteers are standing by!
 
+## Modifications
+
+Add LGT boards pinout definition for Alphawise & Longer U30/LK4/LK1 pro
+
+Add specific French language file without accented characters for DWIN T5UID1 touchscreen
+
+All other thing are forked from Desuuuu/Marlin : For more information please see [this repository](https://github.com/Desuuuu/Marlin).
+A lot af thinks @[Desuuuu](https://github.com/Desuuuu) for DWIN T5UID1 touchscreen integration
+
+Compiled Marlin for Longer LK4 pro with bltouch and specific Longer/alphawise verticale T5UID1 touchscreen firmware available [here](https://github.com/DaGr70/Marlin_Longer_LK4_pro/releases/tag/2.0.7.2_V2)
+
 ## Marlin 2.0
 
 Marlin 2.0 takes this popular RepRap firmware to the next level by adding support for much faster 32-bit and ARM-based boards while improving support for 8-bit AVR boards. Read about Marlin's decision to use a "Hardware Abstraction Layer" below.
