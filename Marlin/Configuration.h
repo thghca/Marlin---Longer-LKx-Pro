@@ -97,6 +97,7 @@
 #define LGT_MAC	 //  For Alphawise and Longer U30 pro LK4 pro
 #define LK4_Pro  //  for LK4pro
 //#define LK1_pro
+#define LK4_Pro_BLTOUCH
 
 
 /**
@@ -786,9 +787,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -913,7 +914,11 @@
 /**
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
  */
-#define BLTOUCH   //  For Alphawise and Longer U30 pro LK4 pro with BLtouch
+#ifdef LK4_Pro_BLTOUCH
+  #define BLTOUCH
+#else
+//#define BLTOUCH
+#endif
 
 /**
  * Pressure sensor with a BLTouch-like interface
@@ -1025,8 +1030,13 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
-#define MULTIPLE_PROBING 2
-#define EXTRA_PROBING    1
+#ifdef LK4_Pro_BLTOUCH // TODO
+  #define MULTIPLE_PROBING 2
+  #define EXTRA_PROBING    1
+#else
+//#define MULTIPLE_PROBING 2
+//#define EXTRA_PROBING    1
+#endif
 
 /**
  * Z probes require clearance when deploying, stowing, and moving between
@@ -1054,7 +1064,11 @@
 #define Z_PROBE_OFFSET_RANGE_MAX 20
 
 // Enable the M48 repeatability test to test probe accuracy
-#define Z_MIN_PROBE_REPEATABILITY_TEST
+#ifdef LK4_Pro_BLTOUCH
+  #define Z_MIN_PROBE_REPEATABILITY_TEST
+#else
+  //#define Z_MIN_PROBE_REPEATABILITY_TEST
+#endif
 
 // Before deploy/stow pause for user confirmation
 //#define PAUSE_BEFORE_DEPLOY_STOW
@@ -1142,11 +1156,11 @@
 // @section machine
 
 // The size of the print bed
-#ifdef LK1_Pro
+#if defined(LK1_Pro) || defined(LK5_Pro)
 	#define X_BED_SIZE 300 // for LK1 pro
 	#define Y_BED_SIZE 300 // for LK1 pro
 
-#else
+#else // LK4 Pro
   #define X_BED_SIZE 220  //  For Alphawise and Longer U30 pro LK4 pro
   #define Y_BED_SIZE 220  //  For Alphawise and Longer U30 pro LK4 pro
 #endif
@@ -1159,9 +1173,9 @@
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
 
-#ifdef LK1_Pro
+#if defined (LK1_Pro) || defined(LK5_Pro)
   #define Z_MAX_POS 400  // for LK1 pro
-#else
+#else // LK4 Pro
   #define Z_MAX_POS 250   //  For Alphawise and Longer U30 pro LK4 pro
 #endif
 
@@ -1211,7 +1225,7 @@
 
   // Set one or more commands to execute on filament runout.
   // (After 'M412 H' Marlin will ask the host to handle the process.)
-  #define FILAMENT_RUNOUT_SCRIPT "M25" // "M600"  -> For Alphawise and Longer U30 pro LK4 pro
+  #define FILAMENT_RUNOUT_SCRIPT "M600" // "M600"  -> For Alphawise and Longer U30 pro LK4 pro
 
   // After a runout is detected, continue printing this length of filament
   // before executing the runout script. Useful for a sensor at the end of
@@ -1266,7 +1280,11 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-#define AUTO_BED_LEVELING_BILINEAR  //  For Alphawise and Longer U30 pro LK4 pro with BLtouch
+#if ENABLED(LK1_Pro_AutoBed) || ENABLED(LK4_Pro_BLTOUCH)
+    #define AUTO_BED_LEVELING_BILINEAR
+#else
+//#define AUTO_BED_LEVELING_BILINEAR
+#endif
 //#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
@@ -1274,7 +1292,11 @@
  * Normally G28 leaves leveling disabled on completion. Enable
  * this option to have G28 restore the prior leveling state.
  */
-#define RESTORE_LEVELING_AFTER_G28
+#ifdef LK4_Pro_BLTOUCH
+  #define RESTORE_LEVELING_AFTER_G28
+#else
+//#define RESTORE_LEVELING_AFTER_G28
+#endif
 
 /**
  * Enable detailed logging of G28, G29, M48, etc.
@@ -1313,8 +1335,12 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 5  // for compatibilities with DWIN Screen firmware
-  #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+#if ENABLED(LK1_Pro_AutoBed) || ENABLED(LK4_Pro_BLTOUCH)
+#define GRID_MAX_POINTS_X 5
+#else
+#define GRID_MAX_POINTS_X 3
+#endif
+#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
@@ -1417,7 +1443,11 @@
 // - Move the Z probe (or nozzle) to a defined XY point before Z Homing.
 // - Prevent Z homing when the Z probe is outside bed area.
 //
-#define Z_SAFE_HOMING  //  For Alphawise and Longer U30 pro LK4 pro with Bltouch
+#if ENABLED(LK1_Pro_AutoBed) || ENABLED(LK4_Pro_BLTOUCH)
+  #define Z_SAFE_HOMING
+#else
+  //#define Z_SAFE_HOMING
+#endif
 
 #if ENABLED(Z_SAFE_HOMING)
   #define Z_SAFE_HOMING_X_POINT X_CENTER  // X point for Z homing
@@ -2384,7 +2414,7 @@
  *
  * LED Type. Enable only one of the following two options.
  */
-#define RGB_LED
+//#define RGB_LED
 //#define RGBW_LED
 
 #if EITHER(RGB_LED, RGBW_LED)
