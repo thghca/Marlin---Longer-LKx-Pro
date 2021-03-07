@@ -1,5 +1,5 @@
 # Longer LK4 pro configuation file
- * Necesary to add BLTouch for compatinbility with DGUS-reloaded Screen Firmare
+ * Necessary to add BLTouch for compatibility with DGUS-reloaded Screen Firmare
  * You can find into sub-folder all files to take in account Longer/alphawise LGT kit V1.0 motherboard. Based on ramps pintout but with specifics attribution
 - Servo0 on D7 pin
 - Filament runout sensor on D2 pin
