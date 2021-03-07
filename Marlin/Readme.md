@@ -5,6 +5,15 @@
 - Filament runout sensor on D2 pin
 - DWIN DGUS screen on serial port 1 (aux1) RX/D19 TX/D18	 
 
+- RGB_LED on LGT Kit V1.0 J21 connector
+    - RED pin 4
+    - GREEN pin 5
+    - Blue Pin 6
+  
+ - NEOPIXEL GRB
+    - Driving pin : pin 4  on J21 connector
+
+Light Mode (RGB_LED or neopixel) should be selected on config.h file.
 
 ## Credits
 [Thibis] https://www.thingiverse.com/thing:4261004 
