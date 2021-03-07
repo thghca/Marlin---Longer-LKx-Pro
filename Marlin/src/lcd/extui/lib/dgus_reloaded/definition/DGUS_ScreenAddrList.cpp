@@ -154,6 +154,7 @@ constexpr DGUS_Addr LIST_MOVE[] PROGMEM = {
   DGUS_Addr::MOVE_CurrentY,
   DGUS_Addr::MOVE_CurrentZ,
   DGUS_Addr::MOVE_StepIcons,
+  DGUS_Addr::STEPPER_Status,
   (DGUS_Addr)0
 };
 
