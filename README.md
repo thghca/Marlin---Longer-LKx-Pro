@@ -14,15 +14,19 @@ Please test this firmware and let us know if it misbehaves in any way. Volunteer
 
 ## Modifications
 
-Added advanced settings to allow to change Steps/mm, Acceleration and more from the UI.
+Added advanced settings to allow to change Steps/mm, Acceleration and more from the touchscreen.
+
+Reworked some screens layout and navigation.
 
 Enabled the M600 command by default.
 
-Enabled power loss by default.
+Enabled power loss recovery by default.
 
 Integrated all changes from https://github.com/Desuuuu/Marlin and https://github.com/MarlinFirmware/Marlin to stay up to date with Marlin and the Reloaded screens updates.
 
-Compiled Marlin for Longer LK4 pro with bltouch and specific Longer/alphawise verticale T5UID1 touchscreen firmware available [here](https://github.com/DaGr70/Marlin_Longer_LK4_pro/releases/tag/2.0.7.2_V2)
+Releases will contain the touchscreen firmware that matches. If you want the source of the screen firmware you can find it here https://github.com/Guizz27/DWIN_LK4Pro.
+
+Compiled Marlin for Longer LK4 pro with bltouch and specific Longer/alphawise verticale T5UID1 touchscreen
 
 ## Marlin 2.0
 
