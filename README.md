@@ -1,4 +1,6 @@
-# Marlin 3D Printer Firmware For Longer LK1 Pro, LK4 Pro and LK5 Pro
+# Marlin 2.0 Printer Firmware For Longer LK4 Pro.
+
+This is a fork from https://github.com/DaGr70/Marlin_Longer_LK4_pro.
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
@@ -12,14 +14,19 @@ Please test this firmware and let us know if it misbehaves in any way. Volunteer
 
 ## Modifications
 
-Add LGT boards pinout definition for Alphawise & Longer U30/LK4/LK1 pro
+Added advanced settings to allow to change Steps/mm, Acceleration and more from the touchscreen.
 
-Add specific French language file without accented characters for DWIN T5UID1 touchscreen
+Reworked some screens layout and navigation.
 
-All other thing are forked from Desuuuu/Marlin : For more information please see [this repository](https://github.com/Desuuuu/Marlin).
-A lot af thinks @[Desuuuu](https://github.com/Desuuuu) for DWIN T5UID1 touchscreen integration
+Enabled the M600 command by default.
 
-Compiled Marlin for Longer LK4 pro with bltouch and specific Longer/alphawise verticale T5UID1 touchscreen firmware available [here](https://github.com/DaGr70/Marlin_Longer_LK4_pro/releases/tag/2.0.7.2_V2)
+Enabled power loss recovery by default.
+
+Integrated all changes from https://github.com/Desuuuu/Marlin and https://github.com/MarlinFirmware/Marlin to stay up to date with Marlin and the Reloaded screens updates.
+
+Releases will contain the touchscreen firmware that matches. If you want the source of the screen firmware you can find it here https://github.com/Guizz27/DWIN_LK4Pro.
+
+Compiled Marlin for Longer LK4 pro with bltouch and specific Longer/alphawise verticale T5UID1 touchscreen
 
 ## Marlin 2.0
 
