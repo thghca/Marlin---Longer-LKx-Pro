@@ -80,9 +80,9 @@ void DGUSRxHandler::ScreenChange(DGUS_VP &vp, void *data_ptr)
 
   DEBUG_ECHOLNPAIR("screen change vp ", (uint16_t)vp.addr," screen ", (uint16_t)screen);
 
-  if (vp.addr == DGUS_Addr::SCREENCHANGE_SD){
+  if (vp.addr == DGUS_Addr::SCREENCHANGE_SD) {
     #if ENABLED(SDSUPPORT)
-        #if !PIN_EXISTS(SD_DETECT)
+      #if !PIN_EXISTS(SD_DETECT)
         card.mount();
       #endif
 
@@ -96,7 +96,6 @@ void DGUSRxHandler::ScreenChange(DGUS_VP &vp, void *data_ptr)
       dgus_screen_handler.SetStatusMessagePGM(GET_TEXT(MSG_NO_MEDIA));
       return;
     #endif
-
   }
 
   
@@ -651,8 +650,12 @@ void DGUSRxHandler::Probe(DGUS_VP &vp, void *data_ptr)
   UNUSED(vp);
   UNUSED(data_ptr);
 
-  if (!ExtUI::isPositionKnown())
-  {
+  #if ENABLED(MESH_BED_LEVELING)
+    dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_ABL_REQUIRED);
+    return;
+  #endif
+
+  if (!ExtUI::isPositionKnown()) {
     dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_HOMING_REQUIRED);
     return;
   }
@@ -665,7 +668,11 @@ void DGUSRxHandler::Probe(DGUS_VP &vp, void *data_ptr)
 
   dgus_screen_handler.TriggerScreenChange(DGUS_Screen::LEVELING_PROBING);
 
-  queue.enqueue_now_P(PSTR("G29\nM420S1"));
+  #if ENABLED(AUTO_BED_LEVELING_UBL)
+    queue.enqueue_now_P(PSTR("G29P1\nG29P3\nG29P5C"));
+  #else
+    queue.enqueue_now_P(PSTR("G29"));
+  #endif
   queue.enqueue_now_P(DGUS_CMD_EEPROM_SAVE);
 }
 
