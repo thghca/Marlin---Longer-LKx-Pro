@@ -1,6 +1,5 @@
 # Marlin 2.0 Printer Firmware For Longer LK4 Pro.
 
-This is a fork from https://github.com/DaGr70/Marlin_Longer_LK4_pro.
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
@@ -14,13 +13,17 @@ Please test this firmware and let us know if it misbehaves in any way. Volunteer
 
 ## Modifications
 
-Added advanced settings to allow to change Steps/mm, Acceleration and more from the touchscreen.
+This is based on the work from DaGr70 https://github.com/DaGr70/Marlin_Longer_LK4_pro and Desuuuu https://github.com/Desuuuu/Marlin.
 
-Reworked some screens layout and navigation.
+I wanted more features and a more consistent look on the touchscreen. I made these modifications but more features will be added over time.
 
-Enabled the M600 command by default.
+- Added advanced settings to allow changing Steps/mm, Acceleration and more from the touchscreen.
 
-Enabled power loss recovery by default.
+- Reworked some screens layout and navigation.
+
+- Enabled the M600 command by default.
+
+- Enabled power loss recovery by default.
 
 Integrated all changes from https://github.com/Desuuuu/Marlin and https://github.com/MarlinFirmware/Marlin to stay up to date with Marlin and the Reloaded screens updates.
 
