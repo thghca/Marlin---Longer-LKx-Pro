@@ -41,6 +41,7 @@ namespace DGUSTxHandler {
   void StatusIcons(DGUS_VP &);
 
   void Flowrate(DGUS_VP &);
+  void FeedrateMMS(DGUS_VP &);
 
   void TempMax(DGUS_VP &);
 
@@ -50,6 +51,7 @@ namespace DGUSTxHandler {
 
   void ABLDisableIcon(DGUS_VP &);
   void ABLGrid(DGUS_VP &);
+  void ABLGridColor(DGUS_VP &);
 
   void FilamentIcons(DGUS_VP &);
 
@@ -74,6 +76,30 @@ namespace DGUSTxHandler {
   void Volume(DGUS_VP &);
 
   void Brightness(DGUS_VP &);
+
+  void StepsPerMmX(DGUS_VP &);
+  void StepsPerMmY(DGUS_VP &);
+  void StepsPerMmZ(DGUS_VP &);
+  void StepsPerMmE(DGUS_VP &);
+  void JerkStepsMmX(DGUS_VP &);
+  void JerkStepsMmY(DGUS_VP &);
+  void JerkStepsMmZ(DGUS_VP &);
+  void JerkStepsMmE(DGUS_VP &);
+  void JunctionDeviation(DGUS_VP &);
+  void LinearAdvance(DGUS_VP &);
+  void AccelerationX(DGUS_VP &);
+  void AccelerationY(DGUS_VP &);
+  void AccelerationZ(DGUS_VP &);
+  void AccelerationE(DGUS_VP &);
+  void AccelerationPrint(DGUS_VP &);
+  void AccelerationRetract(DGUS_VP &);
+  void AccelerationTravel(DGUS_VP &);
+  void MaxFeedRateX(DGUS_VP &);
+  void MaxFeedRateY(DGUS_VP &);
+  void MaxFeedRateZ(DGUS_VP &);
+  void MaxFeedRateE(DGUS_VP &);
+  void MinPrintFeedRate(DGUS_VP &);
+  void MinTravelFeedRate(DGUS_VP &);
 
   void ExtraToString(DGUS_VP &);
   void ExtraPGMToString(DGUS_VP &);

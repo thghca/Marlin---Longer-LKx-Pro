@@ -33,9 +33,9 @@ enum class DGUS_Control : uint8_t {
   SCROLL_UP   = 7, // RETURN_KEY_CODE
   SCROLL_DOWN = 8, // RETURN_KEY_CODE
 
-  // PRINT_STATUS
-  PAUSE       = 1, // POPUP_WINDOW
-  RESUME      = 2, // POPUP_WINDOW
+  // // PRINT_STATUS
+  // PAUSE       = 1, // POPUP_WINDOW
+  // RESUME      = 2, // POPUP_WINDOW
 
   // LEVELING_AUTOMATIC
   DISABLE     = 5, // RETURN_KEY_CODE
@@ -45,6 +45,7 @@ enum class DGUS_Control : uint8_t {
 
   // WAIT
   ABORT       = 1, // POPUP_WINDOW
-  CONTINUE    = 2  // RETURN_KEY_CODE
+  CONTINUE    = 2 // RETURN_KEY_CODE
+
 
 };

@@ -99,6 +99,9 @@
 //#define LK1_pro
 #define LK4_Pro_BLTOUCH
 
+#define LKPro_VERSION "1.0-Beta1"
+//#define DEBUG_DGUSLCD
+
 
 /**
  * Select the serial port on the board to use for communication with the host.
