@@ -538,7 +538,7 @@ void DGUSRxHandler::ZOffset(DGUS_VP &vp, void *data_ptr)
 
   ExtUI::smartAdjustAxis_steps(steps, ExtUI::Z, true);
 
-  dgus_screen_handler.TriggerEEPROMSave();
+//  dgus_screen_handler.TriggerEEPROMSave();
   dgus_screen_handler.TriggerFullUpdate();
 }
 
@@ -575,7 +575,7 @@ void DGUSRxHandler::ZOffsetStep(DGUS_VP &vp, void *data_ptr)
 
   ExtUI::smartAdjustAxis_steps(steps, ExtUI::Z, true);
 
-  dgus_screen_handler.TriggerEEPROMSave();
+//  dgus_screen_handler.TriggerEEPROMSave();
   dgus_screen_handler.TriggerFullUpdate();
 }
 
@@ -673,7 +673,7 @@ void DGUSRxHandler::Probe(DGUS_VP &vp, void *data_ptr)
   #else
     queue.enqueue_now_P(PSTR("G29"));
   #endif
-  queue.enqueue_now_P(DGUS_CMD_EEPROM_SAVE);
+//  queue.enqueue_now_P(DGUS_CMD_EEPROM_SAVE);
 }
 
 void DGUSRxHandler::DisableABL(DGUS_VP &vp, void *data_ptr)
@@ -689,7 +689,7 @@ void DGUSRxHandler::DisableABL(DGUS_VP &vp, void *data_ptr)
 
   ExtUI::setLevelingActive(false);
 
-  dgus_screen_handler.TriggerEEPROMSave();
+//  dgus_screen_handler.TriggerEEPROMSave();
   dgus_screen_handler.TriggerFullUpdate();
 }
 
@@ -1187,7 +1187,7 @@ void DGUSRxHandler::PIDRun(DGUS_VP &vp, void *data_ptr)
   dgus_screen_handler.ShowWaitScreen(DGUS_Screen::PID);
 
   queue.enqueue_one_now(buffer);
-  queue.enqueue_now_P(DGUS_CMD_EEPROM_SAVE);
+//  queue.enqueue_now_P(DGUS_CMD_EEPROM_SAVE);
 }
 
 #if ENABLED(POWER_LOSS_RECOVERY)
