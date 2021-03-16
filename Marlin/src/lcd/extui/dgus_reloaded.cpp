@@ -32,10 +32,12 @@
 
 #include "ui_api.h"
 #include "lib/dgus_reloaded/DGUSScreenHandler.h"
+#include "../../MarlinCore.h"
 
 namespace ExtUI {
 
-  void onStartup() {
+  void onStartup()
+  {
     dgus_screen_handler.Init();
   }
 
@@ -146,6 +148,12 @@ namespace ExtUI {
     }
   #endif
 
+  // Pause message - equivalent of lcd_pause_show_message()
+  void onPauseMessage(PauseMessage message, PauseMode mode)
+  {
+    dgus_screen_handler.ShowPauseMessage(message, mode);
+  }
 }
+
 
 #endif // DGUS_LCD_UI_RELOADED

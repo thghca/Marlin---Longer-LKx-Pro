@@ -110,6 +110,8 @@ namespace ExtUI {
       // Called for temperature PID tuning result
     }
   #endif
+
+  void onPauseMessage(PauseMessage message, PauseMode mode) {}
 }
 
 #endif // EXTUI_EXAMPLE && EXTENSIBLE_UI

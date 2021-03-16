@@ -531,6 +531,8 @@ namespace ExtUI {
   #if ENABLED(POWER_LOSS_RECOVERY)
     void onPowerLossResume() {}
   #endif
+
+  void onPauseMessage(PauseMessage message, PauseMode mode) {}
 }
 
 #endif // MALYAN_LCD

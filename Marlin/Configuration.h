@@ -96,10 +96,10 @@
 // @section machine
 #define LGT_MAC	 //  For Alphawise and Longer U30 pro LK4 pro
 #define LK4_Pro  //  for LK4pro
-//#define LK1_pro
 #define LK4_Pro_BLTOUCH
 
 #define LKPro_VERSION "1.0-Beta1"
+#define LCD_HEIGHT 4  // number of message lines in the wait screen
 //#define DEBUG_DGUSLCD
 
 

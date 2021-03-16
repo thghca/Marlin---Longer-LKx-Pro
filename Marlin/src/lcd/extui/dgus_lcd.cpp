@@ -146,5 +146,7 @@ namespace ExtUI {
     }
   #endif
 
+  void onPauseMessage(PauseMessage message, PauseMode mode) {}
+
 }
 #endif // DGUS_LCD_UI_CLASSIC

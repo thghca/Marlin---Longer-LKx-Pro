@@ -99,6 +99,7 @@ void GcodeSuite::M600() {
   #if HAS_LCD_MENU && DISABLED(MMU2_MENUS)
     lcd_pause_show_message(PAUSE_MESSAGE_CHANGING, PAUSE_MODE_PAUSE_PRINT, target_extruder);
   #endif
+  TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_CHANGING, PAUSE_MODE_PAUSE_PRINT));
 
   #if ENABLED(HOME_BEFORE_FILAMENT_CHANGE)
     // If needed, home before parking for filament change

@@ -35,6 +35,10 @@
   #include "../../../lcd/ultralcd.h"
 #endif
 
+#if ENABLED(EXTENSIBLE_UI)
+  #include "../../../lcd/extui/ui_api.h"
+#endif
+
 #if ENABLED(POWER_LOSS_RECOVERY)
   #include "../../../feature/powerloss.h"
 #endif
@@ -74,6 +78,7 @@ void GcodeSuite::M125() {
   const bool sd_printing = TERN0(SDSUPPORT, IS_SD_PRINTING());
 
   TERN_(HAS_LCD_MENU, lcd_pause_show_message(PAUSE_MESSAGE_PARKING, PAUSE_MODE_PAUSE_PRINT));
+  TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_PARKING, PAUSE_MODE_PAUSE_PRINT));
 
   const bool show_lcd = TERN0(HAS_LCD_MENU, parser.seenval('P'));
 

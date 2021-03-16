@@ -170,6 +170,8 @@ namespace ExtUI {
       GOTO_SCREEN(StatusScreen);
     }
   #endif // HAS_PID_HEATING
+
+  void onPauseMessage(PauseMessage message, PauseMode mode) {}
 }
 
 #endif // TOUCH_UI_FTDI_EVE

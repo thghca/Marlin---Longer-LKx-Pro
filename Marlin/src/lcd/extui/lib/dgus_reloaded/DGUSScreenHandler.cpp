@@ -107,6 +107,8 @@ const char DGUS_MSG_HOMING_REQUIRED[] PROGMEM = "Homing necessary...",
 const char DGUS_CMD_HOME[] PROGMEM = "G28",
            DGUS_CMD_EEPROM_SAVE[] PROGMEM = "M500";
 
+PauseMode pause_mode = PAUSE_MODE_PAUSE_PRINT;
+
 void DGUSScreenHandler::Init() {
   dgus_display.Init();
 
@@ -386,6 +388,98 @@ void DGUSScreenHandler::FilamentRunout(const ExtUI::extruder_t extruder) {
   }
 
 #endif // HAS_PID_HEATING
+
+// Pause message - equivalent of lcd_pause_show_message()
+void DGUSScreenHandler::ShowPauseMessage(PauseMessage message, PauseMode mode)
+{
+  PGM_P msg = NUL_STR;
+  PGM_P header = NUL_STR;
+  bool waitForInput = false;
+
+  if(mode != PAUSE_MODE_SAME) {
+    pause_mode = mode;
+  }
+
+  switch (pause_mode)
+  {
+  case PAUSE_MODE_CHANGE_FILAMENT:
+    header = GET_TEXT(MSG_FILAMENT_CHANGE_HEADER);
+    break;
+  case PAUSE_MODE_LOAD_FILAMENT:
+    header = GET_TEXT(MSG_FILAMENT_CHANGE_HEADER_LOAD);
+    break;
+  case PAUSE_MODE_UNLOAD_FILAMENT:
+    header = GET_TEXT(MSG_FILAMENT_CHANGE_HEADER_UNLOAD);
+    break;
+  default:
+    header = GET_TEXT(MSG_FILAMENT_CHANGE_HEADER_PAUSE);
+    break;
+  }    
+
+  switch (message) {
+    case PAUSE_MESSAGE_PARKING:
+      msg = GET_TEXT(MSG_PAUSE_PRINT_PARKING);
+      break;
+    case PAUSE_MESSAGE_CHANGING:
+      msg = GET_TEXT(MSG_FILAMENT_CHANGE_INIT);
+      break;
+    case PAUSE_MESSAGE_UNLOAD:   
+      msg = GET_TEXT(MSG_FILAMENT_CHANGE_UNLOAD);
+      break;
+    case PAUSE_MESSAGE_WAITING:
+      msg = GET_TEXT(MSG_ADVANCED_PAUSE_WAITING);
+      waitForInput = true;
+      break;
+    case PAUSE_MESSAGE_INSERT:
+      msg = GET_TEXT(MSG_FILAMENT_CHANGE_INSERT);
+      waitForInput = true;
+      break;
+    case PAUSE_MESSAGE_LOAD:
+      msg = GET_TEXT(MSG_FILAMENT_CHANGE_LOAD);
+      break;
+    case PAUSE_MESSAGE_PURGE:
+      msg = GET_TEXT(MSG_FILAMENT_CHANGE_PURGE);
+  // #if ENABLED(ADVANCED_PAUSE_CONTINUOUS_PURGE)
+  //   _lcd_pause_message(GET_TEXT(MSG_FILAMENT_CHANGE_CONT_PURGE));
+  // #else
+  //   _lcd_pause_message(GET_TEXT(MSG_FILAMENT_CHANGE_PURGE));
+  // #endif
+      break;
+    case PAUSE_MESSAGE_RESUME:
+      msg = GET_TEXT(MSG_FILAMENT_CHANGE_RESUME);
+      break;
+    case PAUSE_MESSAGE_HEAT:
+      msg = GET_TEXT(MSG_FILAMENT_CHANGE_HEAT);
+      waitForInput = true;
+      break;
+    case PAUSE_MESSAGE_HEATING:
+      msg = GET_TEXT(MSG_FILAMENT_CHANGE_HEATING);
+      break;
+    case PAUSE_MESSAGE_OPTION:
+      //pause_menu_response = PAUSE_RESPONSE_WAIT_FOR;
+      //return menu_pause_option;
+      break;
+    case PAUSE_MESSAGE_STATUS:
+      break;
+    default:
+      break;
+  }
+
+  if(msg == NUL_STR) {
+    MoveToScreen(DGUS_Screen::PRINT_STATUS, true);// ??
+    return;
+  }
+
+  PGM_P const msg2 = msg;
+  PGM_P const msg3 = msg2 + strlen_P(msg2) + 1;
+  PGM_P const msg4 = msg3 + strlen_P(msg3) + 1;
+
+  SetMessageLinePGM(header, 1);
+  SetMessageLinePGM(msg2, 2);
+  SetMessageLinePGM(msg3, 3);
+  SetMessageLinePGM(msg4, 4);      
+  ShowWaitScreen(DGUS_Screen::PRINT_STATUS, waitForInput);
+}
 
 void DGUSScreenHandler::SetMessageLine(const char* msg, uint8_t line) {
   switch (line) {

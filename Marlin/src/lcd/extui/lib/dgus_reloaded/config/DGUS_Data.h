@@ -83,8 +83,8 @@ namespace DGUS_Data {
 
   enum class FilamentMove : uint8_t
   {
-    RETRACT = 0,
-    EXTRUDE = 1,
+    EXTRUDE = 0,
+    RETRACT = 1,
     UNLOAD = 2,
     LOAD = 3
   };

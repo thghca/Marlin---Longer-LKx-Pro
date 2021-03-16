@@ -70,23 +70,25 @@ public:
     static void PidTuning(const ExtUI::result_t rst);
   #endif
 
-  static void SetMessageLine(const char* msg, uint8_t line);
-  static void SetMessageLinePGM(PGM_P msg, uint8_t line);
+    static void ShowPauseMessage(PauseMessage message, PauseMode mode);
 
-  static void SetStatusMessage(const char* msg, const millis_t duration = DGUS_STATUS_EXPIRATION_MS);
-  static void SetStatusMessagePGM(PGM_P msg, const millis_t duration = DGUS_STATUS_EXPIRATION_MS);
+    static void SetMessageLine(const char *msg, uint8_t line);
+    static void SetMessageLinePGM(PGM_P msg, uint8_t line);
 
-  static void ShowWaitScreen(DGUS_Screen return_screen, bool has_continue = false);
+    static void SetStatusMessage(const char *msg, const millis_t duration = DGUS_STATUS_EXPIRATION_MS);
+    static void SetStatusMessagePGM(PGM_P msg, const millis_t duration = DGUS_STATUS_EXPIRATION_MS);
 
-  static DGUS_Screen GetCurrentScreen();
-  static void TriggerScreenChange(DGUS_Screen screen);
-  static void TriggerFullUpdate();
+    static void ShowWaitScreen(DGUS_Screen return_screen, bool has_continue = false);
 
-  static void TriggerEEPROMSave();
+    static DGUS_Screen GetCurrentScreen();
+    static void TriggerScreenChange(DGUS_Screen screen);
+    static void TriggerFullUpdate();
 
-  static bool IsPrinterIdle();
+    static void TriggerEEPROMSave();
 
-  static uint8_t debug_count;
+    static bool IsPrinterIdle();
+
+    static uint8_t debug_count;
 
   #if ENABLED(SDSUPPORT)
     static ExtUI::FileList filelist;

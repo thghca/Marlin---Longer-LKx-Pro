@@ -138,6 +138,8 @@ static bool ensure_safe_temperature(const bool wait=true, const PauseMode mode=P
   #if HAS_LCD_MENU
     lcd_pause_show_message(PAUSE_MESSAGE_HEATING, mode);
   #endif
+  TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_HEATING, mode));
+
   UNUSED(mode);
 
   if (wait)
@@ -185,6 +187,8 @@ bool load_filament(const float &slow_load_length/*=0*/, const float &fast_load_l
     #if HAS_LCD_MENU
       if (show_lcd) lcd_pause_show_message(PAUSE_MESSAGE_STATUS, mode);
     #endif
+    TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_STATUS, mode));
+
     return false;
   }
 
@@ -192,6 +196,8 @@ bool load_filament(const float &slow_load_length/*=0*/, const float &fast_load_l
     #if HAS_LCD_MENU
       if (show_lcd) lcd_pause_show_message(PAUSE_MESSAGE_INSERT, mode);
     #endif
+    TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_INSERT, mode));
+
     SERIAL_ECHO_MSG(_PMSG(STR_FILAMENT_CHANGE_INSERT));
 
     first_impatient_beep(max_beep_count);
@@ -207,7 +213,7 @@ bool load_filament(const float &slow_load_length/*=0*/, const float &fast_load_l
       host_action_prompt_button(CONTINUE_STR);
       host_action_prompt_show();
     #endif
-    TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(PSTR("Load Filament")));
+    //TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(PSTR("Load Filament")));
     while (wait_for_user) {
       impatient_beep(max_beep_count);
       idle_no_sleep();
@@ -217,6 +223,8 @@ bool load_filament(const float &slow_load_length/*=0*/, const float &fast_load_l
   #if HAS_LCD_MENU
     if (show_lcd) lcd_pause_show_message(PAUSE_MESSAGE_LOAD, mode);
   #endif
+  TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_LOAD, mode));
+
 
   #if ENABLED(DUAL_X_CARRIAGE)
     const int8_t saved_ext        = active_extruder;
@@ -253,9 +261,10 @@ bool load_filament(const float &slow_load_length/*=0*/, const float &fast_load_l
     #if HAS_LCD_MENU
       if (show_lcd) lcd_pause_show_message(PAUSE_MESSAGE_PURGE);
     #endif
+    TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_PURGE, PAUSE_MODE_SAME));
 
     TERN_(HOST_PROMPT_SUPPORT, host_prompt_do(PROMPT_USER_CONTINUE, PSTR("Filament Purging..."), CONTINUE_STR));
-    TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(PSTR("Filament Purging...")));
+//    TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(PSTR("Filament Purging...")));
     wait_for_user = true; // A click or M108 breaks the purge_length loop
     for (float purge_count = purge_length; purge_count > 0 && wait_for_user; --purge_count)
       unscaled_e_move(1, ADVANCED_PAUSE_PURGE_FEEDRATE);
@@ -269,6 +278,7 @@ bool load_filament(const float &slow_load_length/*=0*/, const float &fast_load_l
         #if HAS_LCD_MENU
           if (show_lcd) lcd_pause_show_message(PAUSE_MESSAGE_PURGE);
         #endif
+        TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_PURGE, PAUSE_MODE_SAME));
 
         // Extrude filament to get into hotend
         unscaled_e_move(purge_length, ADVANCED_PAUSE_PURGE_FEEDRATE);
@@ -328,12 +338,16 @@ bool unload_filament(const float &unload_length, const bool show_lcd/*=false*/,
     #if HAS_LCD_MENU
       if (show_lcd) lcd_pause_show_message(PAUSE_MESSAGE_STATUS);
     #endif
+    TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_STATUS, PAUSE_MODE_SAME));
+
     return false;
   }
 
   #if HAS_LCD_MENU
     if (show_lcd) lcd_pause_show_message(PAUSE_MESSAGE_UNLOAD, mode);
   #endif
+  TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_UNLOAD, mode));
+
 
   // Retract filament
   unscaled_e_move(-(FILAMENT_UNLOAD_PURGE_RETRACT) * mix_multiplier, (PAUSE_PARK_RETRACT_FEEDRATE) * mix_multiplier);
@@ -471,6 +485,8 @@ void show_continue_prompt(const bool is_reload) {
   DEBUG_ECHOLNPAIR("... is_reload:", int(is_reload));
 
   TERN_(HAS_LCD_MENU, lcd_pause_show_message(is_reload ? PAUSE_MESSAGE_INSERT : PAUSE_MESSAGE_WAITING));
+  TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(is_reload ? PAUSE_MESSAGE_INSERT : PAUSE_MESSAGE_WAITING, PAUSE_MODE_SAME));
+
   SERIAL_ECHO_START();
   serialprintPGM(is_reload ? PSTR(_PMSG(STR_FILAMENT_CHANGE_INSERT) "\n") : PSTR(_PMSG(STR_FILAMENT_CHANGE_WAIT) "\n"));
 }
@@ -500,7 +516,7 @@ void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep
   // Wait for filament insert by user and press button
   KEEPALIVE_STATE(PAUSED_FOR_USER);
   TERN_(HOST_PROMPT_SUPPORT, host_prompt_do(PROMPT_USER_CONTINUE, GET_TEXT(MSG_NOZZLE_PARKED), CONTINUE_STR));
-  TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_NOZZLE_PARKED)));
+  //TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_NOZZLE_PARKED)));
   wait_for_user = true;    // LCD click or M108 will clear this
   while (wait_for_user) {
     impatient_beep(max_beep_count);
@@ -513,11 +529,13 @@ void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep
     // re-heat the nozzle, re-show the continue prompt, restart idle timers, start over
     if (nozzle_timed_out) {
       TERN_(HAS_LCD_MENU, lcd_pause_show_message(PAUSE_MESSAGE_HEAT));
+      TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_HEAT, PAUSE_MODE_SAME));
+
       SERIAL_ECHO_MSG(_PMSG(STR_FILAMENT_CHANGE_HEAT));
 
       TERN_(HOST_PROMPT_SUPPORT, host_prompt_do(PROMPT_USER_CONTINUE, GET_TEXT(MSG_HEATER_TIMEOUT), GET_TEXT(MSG_REHEAT)));
 
-      TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_HEATER_TIMEOUT)));
+      //TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_HEATER_TIMEOUT)));
 
       wait_for_user_response(0, true); // Wait for LCD click or M108
 
@@ -539,7 +557,7 @@ void wait_for_confirmation(const bool is_reload/*=false*/, const int8_t max_beep
 
       HOTEND_LOOP() thermalManager.heater_idle[e].start(nozzle_timeout);
       TERN_(HOST_PROMPT_SUPPORT, host_prompt_do(PROMPT_USER_CONTINUE, PSTR("Reheat Done"), CONTINUE_STR));
-      TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(PSTR("Reheat finished.")));
+      //TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(PSTR("Reheat finished.")));
       wait_for_user = true;
       nozzle_timed_out = false;
 
@@ -609,6 +627,7 @@ void resume_print(const float &slow_load_length/*=0*/, const float &fast_load_le
   }
 
   TERN_(HAS_LCD_MENU, lcd_pause_show_message(PAUSE_MESSAGE_RESUME));
+  TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_RESUME, PAUSE_MODE_SAME));
 
   // Check Temperature before moving hotend
   ensure_safe_temperature();
@@ -648,6 +667,7 @@ void resume_print(const float &slow_load_length/*=0*/, const float &fast_load_le
   TERN_(POWER_LOSS_RECOVERY, if (recovery.enabled) recovery.save(true));
 
   TERN_(HAS_LCD_MENU, lcd_pause_show_message(PAUSE_MESSAGE_STATUS));
+  TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_STATUS, PAUSE_MODE_SAME));
 
   #ifdef ACTION_ON_RESUMED
     host_action_resumed();
