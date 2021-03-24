@@ -60,6 +60,7 @@ constexpr DGUS_Addr LIST_PRINT_STATUS[] PROGMEM = {
   DGUS_Addr::STATUS_Percent,
 //  DGUS_Addr::STATUS_Icons,
   DGUS_Addr::SD_SelectedFileName,
+  DGUS_Addr::SP_STATUS_Filename,
   DGUS_Addr::FAN0_Speed_CUR,
   DGUS_Addr::STATUS_Feedrate_MMS,
   DGUS_Addr::STATUS_Pause_Resume_Icon,

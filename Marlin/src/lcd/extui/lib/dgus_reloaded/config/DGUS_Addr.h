@@ -35,15 +35,43 @@ constexpr uint8_t DGUS_LONGESTPRINT_LEN     = 24;
 constexpr uint8_t DGUS_FILAMENTUSED_LEN     = 24;
 constexpr uint8_t DGUS_GCODE_LEN            = 32;
 
+enum class DGUS_SP_Variable : uint8_t
+{
+  X      = 0x01,
+  Y      = 0x02,
+  COLOR  = 0x03,
+  Lib_ID_Font_X_Dots = 0x04, // H lid, L x size
+  ALIGN_INT  = 0x05, // H: align 00=right, 01=left, 02=center L: number int digits
+  DEC_MODE  =0x06, // H: decimal number, L: mode 00=int, 01=long, 04=int64, 05=uint, 06=ulong
+  UNITS    = 0x07 // H: len L: text max 11 bytes 
+};
+
+enum class DGUS_SP_Text : uint8_t
+{
+  X      = 0x01,
+  Y      = 0x02,
+  COLOR  = 0x03,
+  BOX    = 0x04, // Xs,Ys,Xe,Ye 2 bytes each
+  LEN    = 0x08,
+  FONT   = 0x09, // H: font0, L: font1
+  FONT_SIZE = 0x0A, // H: X dots, L: y dots
+  ENCODE  = 0x0B,
+  LINE_SPACING = 0x0C // H: spacing
+};
+
 constexpr uint8_t DGUS_SP_VARIABLE_LEN      = 0x08;
 constexpr uint8_t DGUS_SP_TEXT_LEN          = 0x0D;
 
-constexpr uint8_t SP_VARIABLE_COLOR_OFFSET = 0x03; // word
-constexpr uint8_t SP_TEXT_COLOR_OFFSET     = 0x03;  // word
-constexpr uint8_t SP_TEXT_SIZE_OFFSET      = 0x0A;  // H: x L: y
-
 constexpr uint16_t COLOR_WHITE = 0xFFFF;
 constexpr uint16_t COLOR_GREEN = 0x07E0;
+
+// TODO: Read these values at init
+// variable display box size in dwin screen
+constexpr int16_t STATUS_Filename_Box[4] = {56, 338, 192, 12};
+constexpr int16_t WAIT_Message_Line1_Box[4] = {25, 157, 224, 20};
+constexpr int16_t WAIT_Message_Line2_Box[4] = {25, 183, 224, 20};
+constexpr int16_t WAIT_Message_Line3_Box[4] = {25, 209, 224, 20};
+constexpr int16_t WAIT_Message_Line4_Box[4] = {25, 235, 224, 20};
 
 // DWIN DGUS variables are indexed by word. 0x0000-0x6FFFF
 
@@ -219,5 +247,10 @@ enum class DGUS_Addr : uint16_t {
   // Display properties
   SP_LEVEL_AUTO_Grid        = 0x6000, // 8 * 25 = 200, 0x6000-0x60C7
   SP_SD_FileName0           = 0x60C8, // 13 * 5 = 65, 0x60C8-0x6108  
+  SP_STATUS_Filename        = 0x6109, // 13 0x6109-0x6115
+  SP_MSG_LINE1              = 0x6116, // 13 0x6116-0x6122
+  SP_MSG_LINE2              = 0x6123, // 13 0x6123-0x612F
+  SP_MSG_LINE3              = 0x6130, // 13 0x6130-0x613C
+  SP_MSG_LINE4              = 0x613D // 13 0x613D-0x6149
 
 };

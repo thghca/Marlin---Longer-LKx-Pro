@@ -78,6 +78,7 @@ public:
     static void SetStatusMessage(const char *msg, const millis_t duration = DGUS_STATUS_EXPIRATION_MS);
     static void SetStatusMessagePGM(PGM_P msg, const millis_t duration = DGUS_STATUS_EXPIRATION_MS);
 
+    static void SetTextSize(DGUS_Addr var, uint16_t len, const int16_t *boxSize, bool center = false);
     static void ShowWaitScreen(DGUS_Screen return_screen, bool has_continue = false);
 
     static DGUS_Screen GetCurrentScreen();

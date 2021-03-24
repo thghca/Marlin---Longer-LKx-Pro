@@ -185,6 +185,7 @@ const struct DGUS_VP vp_list[] PROGMEM = {
     VP_HELPER_TX_SIZE(DGUS_Addr::SD_SelectedFileName,
                       DGUS_FILENAME_LEN,
                       &DGUSTxHandler::SelectedFileName),
+    VP_HELPER_TX(DGUS_Addr::SP_STATUS_Filename, &DGUSTxHandler::SelectedFileNameFormat),
 #endif
 
     VP_HELPER_TX_AUTO(DGUS_Addr::STATUS_PositionZ,

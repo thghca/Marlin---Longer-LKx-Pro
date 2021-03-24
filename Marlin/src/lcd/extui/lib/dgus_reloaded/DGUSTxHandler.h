@@ -33,6 +33,7 @@ namespace DGUSTxHandler {
     void FileName(DGUS_VP &);
     void ScrollIcons(DGUS_VP &);
     void SelectedFileName(DGUS_VP &);
+    void SelectedFileNameFormat(DGUS_VP &);
   #endif
 
   void PositionZ(DGUS_VP &);

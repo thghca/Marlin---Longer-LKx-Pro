@@ -175,7 +175,17 @@
       return;
     }
 
-    dgus_display.WriteString((uint16_t)vp.addr, dgus_screen_handler.filelist.filename(), vp.size);
+    const char *filename = dgus_screen_handler.filelist.filename();
+    dgus_display.WriteString((uint16_t)vp.addr, filename, vp.size, true, false, false);
+  }
+
+  void DGUSTxHandler::SelectedFileNameFormat(DGUS_VP &vp) {
+    if (dgus_screen_handler.filelist_selected < 0
+        || !dgus_screen_handler.filelist.seek(dgus_screen_handler.filelist_selected)) {
+      return;
+    }
+    uint16_t txtlen = _MIN(strlen(dgus_screen_handler.filelist.filename()), DGUS_FILENAME_LEN);
+    dgus_screen_handler.SetTextSize(vp.addr, txtlen, STATUS_Filename_Box, false);
   }
 #endif // SDSUPPORT
 
@@ -379,7 +389,7 @@ void DGUSTxHandler::ABLGridColor(DGUS_VP &vp) {
     if((dgus_screen_handler.probing_icons[point < 16 ? 0 : 1] & (1U << (point % 16))) != 0) {
       color = Swap16(COLOR_GREEN);
     }
-    dgus_display.Write((uint16_t)vp.addr + point * DGUS_SP_VARIABLE_LEN + SP_VARIABLE_COLOR_OFFSET, color);
+    dgus_display.Write((uint16_t)vp.addr + point * DGUS_SP_VARIABLE_LEN + (int)DGUS_SP_Variable::COLOR, color);
   }
 }
 

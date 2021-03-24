@@ -482,39 +482,69 @@ void DGUSScreenHandler::ShowPauseMessage(PauseMessage message, PauseMode mode)
 }
 
 void DGUSScreenHandler::SetMessageLine(const char* msg, uint8_t line) {
-  switch (line) {
-    default: return;
-    case 1:
-      dgus_display.WriteString((uint16_t)DGUS_Addr::MESSAGE_Line1, msg, DGUS_LINE_LEN, true, true);
-      break;
-    case 2:
-      dgus_display.WriteString((uint16_t)DGUS_Addr::MESSAGE_Line2, msg, DGUS_LINE_LEN, true, true);
-      break;
-    case 3:
-      dgus_display.WriteString((uint16_t)DGUS_Addr::MESSAGE_Line3, msg, DGUS_LINE_LEN, true, true);
-      break;
-    case 4:
-      dgus_display.WriteString((uint16_t)DGUS_Addr::MESSAGE_Line4, msg, DGUS_LINE_LEN, true, true);
-      break;
+  DGUS_Addr vp;
+  DGUS_Addr sp;
+  const int16_t *box;
+  switch (line)
+  {
+  default:
+    return;
+  case 1:
+    vp = DGUS_Addr::MESSAGE_Line1;
+    sp = DGUS_Addr::SP_MSG_LINE1;
+    box = WAIT_Message_Line1_Box;
+    break;
+  case 2:
+    vp = DGUS_Addr::MESSAGE_Line2;
+    sp = DGUS_Addr::SP_MSG_LINE2;
+    box = WAIT_Message_Line2_Box;
+    break;
+  case 3:
+    vp = DGUS_Addr::MESSAGE_Line3;
+    sp = DGUS_Addr::SP_MSG_LINE3;
+    box = WAIT_Message_Line3_Box;
+    break;
+  case 4:
+    vp = DGUS_Addr::MESSAGE_Line4;
+    sp = DGUS_Addr::SP_MSG_LINE4;
+    box = WAIT_Message_Line4_Box;
+    break;
   }
+  dgus_display.WriteString((uint16_t)vp, msg, DGUS_LINE_LEN, true, false, false);
+  SetTextSize(sp, _MIN(strlen(msg), DGUS_LINE_LEN), box, true);
 }
 
 void DGUSScreenHandler::SetMessageLinePGM(PGM_P msg, uint8_t line) {
-  switch (line) {
-    default: return;
-    case 1:
-      dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Line1, msg, DGUS_LINE_LEN, true, true);
-      break;
-    case 2:
-      dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Line2, msg, DGUS_LINE_LEN, true, true);
-      break;
-    case 3:
-      dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Line3, msg, DGUS_LINE_LEN, true, true);
-      break;
-    case 4:
-      dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Line4, msg, DGUS_LINE_LEN, true, true);
-      break;
+  DGUS_Addr vp;
+  DGUS_Addr sp;
+  const int16_t *box;
+  switch (line)
+  {
+  default:
+    return;
+  case 1:
+    vp = DGUS_Addr::MESSAGE_Line1;
+    sp = DGUS_Addr::SP_MSG_LINE1;
+    box = WAIT_Message_Line1_Box;
+    break;
+  case 2:
+    vp = DGUS_Addr::MESSAGE_Line2;
+    sp = DGUS_Addr::SP_MSG_LINE2;
+    box = WAIT_Message_Line2_Box;
+    break;
+  case 3:
+    vp = DGUS_Addr::MESSAGE_Line3;
+    sp = DGUS_Addr::SP_MSG_LINE3;
+    box = WAIT_Message_Line3_Box;
+    break;
+  case 4:
+    vp = DGUS_Addr::MESSAGE_Line4;
+    sp = DGUS_Addr::SP_MSG_LINE4;
+    box = WAIT_Message_Line4_Box;
+    break;
   }
+  dgus_display.WriteStringPGM((uint16_t)vp, msg, DGUS_LINE_LEN, true, false, false);
+  SetTextSize(sp, _MIN(strlen_P(msg), DGUS_LINE_LEN), box, true);
 }
 
 void DGUSScreenHandler::SetStatusMessage(const char* msg, const millis_t duration) {
@@ -527,6 +557,40 @@ void DGUSScreenHandler::SetStatusMessagePGM(PGM_P msg, const millis_t duration) 
   dgus_display.WriteStringPGM((uint16_t)DGUS_Addr::MESSAGE_Status, msg, DGUS_STATUS_LEN, false, true);
 
   status_expire = (duration > 0 ? ExtUI::safe_millis() + duration : 0);
+}
+
+void DGUSScreenHandler::SetTextSize(DGUS_Addr var, uint16_t len, const int16_t *boxSize, bool center)
+{
+  if(len == 0) {
+    return;
+  }
+  DEBUG_ECHOLNPAIR("setsize len ", len);
+  // set text size and box size based on filename length
+  int boxWidth = boxSize[2];
+  int maxCharWidth = boxWidth / len;
+  int fontWidth = _MIN(maxCharWidth, 10);
+  uint16_t fontSize = Swap16((fontWidth << 8) | (fontWidth * 2));
+  DEBUG_ECHOLNPAIR("boxwidth ", boxWidth, " maxcharwidth ", maxCharWidth, " fontwidth ", fontWidth);
+
+  dgus_display.Write((uint16_t)var + (int)DGUS_SP_Text::FONT_SIZE, fontSize);
+
+  // adjust box y and height
+  int height = fontWidth * 2;
+  int heightDiff = (height - boxSize[3]) / 2;
+  int widthDiff = (fontWidth * (int)len - boxSize[2]) / 2;
+  DEBUG_ECHOLNPAIR("heightdiff ", heightDiff, " widthdiff ", widthDiff);
+  uint16_t box[4];
+  box[0] = Swap16(boxSize[0] - (center ? widthDiff : 0));
+  box[1] = Swap16(boxSize[1] - heightDiff);
+  box[2] = Swap16(boxSize[2] + boxSize[0]-1 +  (center ? widthDiff : 0));
+  box[3] = Swap16(boxSize[3] + boxSize[1] - 1 + heightDiff);
+  DEBUG_ECHOLNPAIR("xs ", boxSize[0] - (center ? widthDiff : 0), " ys ", boxSize[1] - heightDiff, " xe ", boxSize[2] + boxSize[0]-1 +  (center ? widthDiff : 0)," ye ", boxSize[3] + boxSize[1] - 1 + heightDiff);
+  dgus_display.Write((uint16_t)var + (int)DGUS_SP_Text::BOX, box, 4*sizeof(uint16_t));
+
+  uint16_t xy[2];
+  xy[0] = box[0];
+  xy[1] = box[1];
+  dgus_display.Write((uint16_t)var + (int)DGUS_SP_Text::X, xy, sizeof(xy));
 }
 
 void DGUSScreenHandler::ShowWaitScreen(DGUS_Screen return_screen, bool has_continue) {
