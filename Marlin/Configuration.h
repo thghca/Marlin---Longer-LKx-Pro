@@ -98,7 +98,7 @@
 #define LK4_Pro  //  for LK4pro
 #define LK4_Pro_BLTOUCH
 
-#define LKPro_VERSION "1.0-Beta1"
+#define LKPro_VERSION "1.0-Beta2"
 #define LCD_HEIGHT 4  // number of message lines in the wait screen
 //#define DEBUG_DGUSLCD
 
@@ -1033,7 +1033,7 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
-#ifdef LK4_Pro_BLTOUCH // TODO
+#ifdef LK4_Pro_BLTOUCH // Set to your liking
   #define MULTIPLE_PROBING 2
   #define EXTRA_PROBING    1
 #else

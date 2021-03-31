@@ -119,16 +119,16 @@ const struct DGUS_VP vp_list[] PROGMEM = {
 
     VP_HELPER_RX(DGUS_Addr::STEPPER_Control, &DGUSRxHandler::Steppers),
     VP_HELPER_RX(DGUS_Addr::RUNOUT_Control, &DGUSRxHandler::RunoutControl),
-
+#if HAS_LEVELING
     VP_HELPER_RX(DGUS_Addr::LEVEL_OFFSET_Set, &DGUSRxHandler::ZOffset),
     VP_HELPER_RX(DGUS_Addr::LEVEL_OFFSET_Step, &DGUSRxHandler::ZOffsetStep),
     VP_HELPER_RX(DGUS_Addr::LEVEL_OFFSET_SetStep, &DGUSRxHandler::ZOffsetSetStep),
-
+#endif
     VP_HELPER_RX(DGUS_Addr::LEVEL_MANUAL_Point, &DGUSRxHandler::MoveToPoint),
 
+#if HAS_LEVELING
     VP_HELPER_RX_NODATA(DGUS_Addr::LEVEL_AUTO_Probe, &DGUSRxHandler::Probe),
-    // VP_HELPER_RX_NODATA(DGUS_Addr::LEVEL_AUTO_Disable,
-    //                     &DGUSRxHandler::DisableABL),
+#endif
 
     VP_HELPER_RX(DGUS_Addr::FILAMENT_Select, &DGUSRxHandler::FilamentSelect),
     VP_HELPER_RX(DGUS_Addr::FILAMENT_SetLength, &DGUSRxHandler::FilamentLength),
@@ -244,6 +244,7 @@ const struct DGUS_VP vp_list[] PROGMEM = {
     //                   nullptr,
     //                   &DGUSTxHandler::StepperStatus),
 
+#if HAS_LEVELING
     VP_HELPER_TX_AUTO(DGUS_Addr::LEVEL_OFFSET_Current,
                       &probe.offset.z,
                       (&DGUSTxHandler::ExtraToFixedPoint<float, 2>)),
@@ -251,20 +252,9 @@ const struct DGUS_VP vp_list[] PROGMEM = {
                        &DGUSScreenHandler::offset_steps,
                        &DGUSTxHandler::StepIcons),
 
-    // VP_HELPER_TX_AUTO(DGUS_Addr::LEVEL_AUTO_DisableIcon,
-    //                   nullptr,
-    //                   &DGUSTxHandler::ABLDisableIcon),
-//    VP_HELPER_TX_AUTO(DGUS_Addr::LEVEL_AUTO_Grid, nullptr, &DGUSTxHandler::ABLGrid),
     VP_HELPER(DGUS_Addr::LEVEL_AUTO_Grid, sizeof(int16_t)*DGUS_LEVEL_GRID_SIZE, VPFLAG_NONE, nullptr, nullptr, &DGUSTxHandler::ABLGrid),
     VP_HELPER(DGUS_Addr::SP_LEVEL_AUTO_Grid, 2, VPFLAG_NONE, nullptr, nullptr, &DGUSTxHandler::ABLGridColor),
-
-    // VP_HELPER_TX_EXTRA(DGUS_Addr::LEVEL_PROBING_Icons1,
-    //                    &DGUSScreenHandler::probing_icons[0],
-    //                    &DGUSTxHandler::ExtraToInteger<uint16_t>),
-    // VP_HELPER_TX_EXTRA(DGUS_Addr::LEVEL_PROBING_Icons2,
-    //                    &DGUSScreenHandler::probing_icons[1],
-    //                    &DGUSTxHandler::ExtraToInteger<uint16_t>),
-
+#endif
 
     VP_HELPER_TX(DGUS_Addr::FILAMENT_ExtruderIcons, &DGUSTxHandler::FilamentIcons),
     VP_HELPER_TX_EXTRA(DGUS_Addr::FILAMENT_Length,
@@ -287,7 +277,7 @@ const struct DGUS_VP vp_list[] PROGMEM = {
                        &DGUSScreenHandler::move_steps,
                        &DGUSTxHandler::StepIcons),
 
-    VP_HELPER_TX(DGUS_Addr::SETTINGS2_BLTouch, &DGUSTxHandler::BLTouch),
+ //   VP_HELPER_TX(DGUS_Addr::SETTINGS2_BLTouch, &DGUSTxHandler::BLTouch),
 
     VP_HELPER_TX(DGUS_Addr::PID_HeaterIcons, &DGUSTxHandler::PIDIcons),
     VP_HELPER_TX_EXTRA(DGUS_Addr::PID_Temp,

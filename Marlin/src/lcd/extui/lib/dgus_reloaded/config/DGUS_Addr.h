@@ -86,7 +86,6 @@ enum class DGUS_Addr : uint16_t {
   LEVEL_OFFSET_SetStep      = 0x2018, // Data: DGUS_Data::StepSize
   LEVEL_MANUAL_Point        = 0x2019, // Data: point index (1-5)
   LEVEL_AUTO_Probe          = 0x201A,
-//  LEVEL_AUTO_Disable        = 0x201B,
   FILAMENT_Select           = 0x201C, // Data: DGUS_Data::Extruder
   FILAMENT_SetLength        = 0x201D, // Type: Integer (16 bits unsigned)
   FILAMENT_Move             = 0x201E, // Data: DGUS_Data::FilamentMove

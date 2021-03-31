@@ -29,11 +29,13 @@ namespace DGUSSetupHandler {
   #endif
   bool PrintStatus();
   bool PrintAdjust();
+  bool LevelingManual();
+#if HAS_LEVELING
   bool LevelingMenu();
   bool LevelingOffset();
-  bool LevelingManual();
   bool LevelingAutomatic();
   bool LevelingProbing();
+#endif
   bool Filament();
   bool Move();
   bool Gcode();

@@ -170,7 +170,7 @@ constexpr DGUS_Addr LIST_GCODE[] PROGMEM = {
 };
 
 constexpr DGUS_Addr LIST_SETTINGS_MENU2[] PROGMEM = {
-  DGUS_Addr::SETTINGS2_BLTouch,
+  //DGUS_Addr::SETTINGS2_BLTouch,
   (DGUS_Addr)0
 };
 

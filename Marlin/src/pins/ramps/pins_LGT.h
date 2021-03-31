@@ -44,9 +44,7 @@
 //
 
 
-#ifndef LK1_Pro_AutoBed
-		#define SERVO0_PIN       7 // Servo0 pin for BLtouch connected to J18 LGT motherboard connector (D7 / Gnd / 5V)
-#endif // !LK1_Pro_AutoBed
+#define SERVO0_PIN       7 // Servo0 pin for BLtouch connected to J18 LGT motherboard connector (D7 / Gnd / 5V)
 	
 
 //
@@ -65,7 +63,7 @@
 #ifdef LK1_Pro_AutoBed
 	#define Z_MIN_PIN          11
 	#define Z_MAX_PIN          37
-#else //LK4_Pro & U30 pro
+#else
 	#define Z_MIN_PIN          35
 	#define Z_MAX_PIN          37
 #endif
