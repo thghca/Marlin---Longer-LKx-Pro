@@ -89,6 +89,8 @@ public:
 
     static bool IsPrinterIdle();
 
+    static void MoveToLevelPoint();
+
     static uint8_t debug_count;
 
   #if ENABLED(SDSUPPORT)
@@ -101,6 +103,7 @@ public:
   static DGUS_Data::StepSize move_steps;
 
   static uint16_t probing_icons[2];
+  static uint8_t levelingPoint;
 
   static DGUS_Data::Extruder filament_extruder;
   static uint16_t filament_length;

@@ -342,7 +342,7 @@ void DGUSTxHandler::StepIcons(DGUS_VP &vp) {
 
   dgus_display.Write((uint16_t)vp.addr, Swap16(icons));
 }
-
+#if HAS_LEVELING
 void DGUSTxHandler::ABLDisableIcon(DGUS_VP &vp) {
   uint16_t data;
 
@@ -392,6 +392,7 @@ void DGUSTxHandler::ABLGridColor(DGUS_VP &vp) {
     dgus_display.Write((uint16_t)vp.addr + point * DGUS_SP_VARIABLE_LEN + (int)DGUS_SP_Variable::COLOR, color);
   }
 }
+#endif
 
 void DGUSTxHandler::FilamentIcons(DGUS_VP &vp) {
   uint16_t icons = 0;

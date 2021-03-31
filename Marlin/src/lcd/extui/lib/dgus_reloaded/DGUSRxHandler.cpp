@@ -73,7 +73,6 @@ const char DGUS_MDG_NOT_WHILE_PRINTING[] PROGMEM = "Impossible while printing",
 #undef fr_na
 #undef fr
 
-
 void DGUSRxHandler::ScreenChange(DGUS_VP &vp, void *data_ptr)
 {
   DGUS_Screen screen = (DGUS_Screen)((uint8_t *)data_ptr)[1];
@@ -118,6 +117,18 @@ void DGUSRxHandler::ScreenChange(DGUS_VP &vp, void *data_ptr)
   else if(screen == DGUS_Screen::PRINT_STATUS && !(print_job_timer.isRunning() || IS_SD_PRINTING())) {
     screen = DGUS_Screen::HOME;
   }
+
+  #if !HAS_LEVELING
+  // Skip Leveling menu if no automatic leveling
+    if(screen == DGUS_Screen::LEVELING_MENU) {
+      if(dgus_screen_handler.GetCurrentScreen() == DGUS_Screen::SETTINGS_MENU) {
+        screen = DGUS_Screen::LEVELING_MANUAL;
+      }
+      else {
+        screen = DGUS_Screen::SETTINGS_MENU;
+      }
+    }
+#endif
 
   dgus_screen_handler.TriggerScreenChange(screen);
 }
@@ -515,6 +526,7 @@ void DGUSRxHandler::RunoutControl(DGUS_VP &vp, void *data_ptr)
   dgus_screen_handler.TriggerFullUpdate();
 }
 
+#if HAS_LEVELING
 void DGUSRxHandler::ZOffset(DGUS_VP &vp, void *data_ptr)
 {
   UNUSED(vp);
@@ -589,16 +601,11 @@ void DGUSRxHandler::ZOffsetSetStep(DGUS_VP &vp, void *data_ptr)
 
   dgus_screen_handler.TriggerFullUpdate();
 }
+#endif
 
 void DGUSRxHandler::MoveToPoint(DGUS_VP &vp, void *data_ptr)
 {
   UNUSED(vp);
-
-  if (!ExtUI::isPositionKnown())
-  {
-    dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_HOMING_REQUIRED);
-    return;
-  }
 
   if (!dgus_screen_handler.IsPrinterIdle())
   {
@@ -606,45 +613,24 @@ void DGUSRxHandler::MoveToPoint(DGUS_VP &vp, void *data_ptr)
     return;
   }
 
-  const uint8_t point = ((uint8_t *)data_ptr)[1];
-  constexpr float lfrb[4] = LEVEL_CORNERS_INSET_LFRB;
-  float x, y;
+  dgus_screen_handler.levelingPoint = ((uint8_t *)data_ptr)[1];
 
-  switch (point)
+  if (!ExtUI::isPositionKnown())
   {
-  default:
+    dgus_screen_handler.SetMessageLinePGM(NUL_STR, 1);
+    dgus_screen_handler.SetMessageLinePGM(DGUS_MSG_HOMING, 2);
+    dgus_screen_handler.SetMessageLinePGM(NUL_STR, 3);
+    dgus_screen_handler.SetMessageLinePGM(NUL_STR, 4);
+    dgus_screen_handler.ShowWaitScreen(DGUS_Screen::LEVELING_MANUAL);
+    queue.enqueue_now_P(DGUS_CMD_HOME);
     return;
-  case 1:
-    x = DGUS_LEVEL_CENTER_X;
-    y = DGUS_LEVEL_CENTER_Y;
-    break;
-  case 2:
-    x = X_MIN_POS + lfrb[0];
-    y = Y_MIN_POS + lfrb[1];
-    break;
-  case 3:
-    x = X_MAX_POS - lfrb[2];
-    y = Y_MIN_POS + lfrb[1];
-    break;
-  case 4:
-    x = X_MAX_POS - lfrb[2];
-    y = Y_MAX_POS - lfrb[3];
-    break;
-  case 5:
-    x = X_MIN_POS + lfrb[0];
-    y = Y_MAX_POS - lfrb[3];
-    break;
   }
 
-  if (ExtUI::getAxisPosition_mm(ExtUI::Z) < Z_MIN_POS + LEVEL_CORNERS_Z_HOP)
-  {
-    ExtUI::setAxisPosition_mm(Z_MIN_POS + LEVEL_CORNERS_Z_HOP, ExtUI::Z);
-  }
-  ExtUI::setAxisPosition_mm(x, ExtUI::X);
-  ExtUI::setAxisPosition_mm(y, ExtUI::Y);
-  ExtUI::setAxisPosition_mm(Z_MIN_POS + LEVEL_CORNERS_HEIGHT, ExtUI::Z);
+  dgus_screen_handler.MoveToLevelPoint();
+
 }
 
+#if HAS_LEVELING
 void DGUSRxHandler::Probe(DGUS_VP &vp, void *data_ptr)
 {
   UNUSED(vp);
@@ -655,43 +641,35 @@ void DGUSRxHandler::Probe(DGUS_VP &vp, void *data_ptr)
     return;
   #endif
 
-  if (!ExtUI::isPositionKnown()) {
-    dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_HOMING_REQUIRED);
-    return;
-  }
-
   if (!dgus_screen_handler.IsPrinterIdle())
   {
     dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_BUSY);
     return;
   }
 
-  dgus_screen_handler.TriggerScreenChange(DGUS_Screen::LEVELING_PROBING);
+  if (!ExtUI::isPositionKnown()) {
+    // Home
+//    dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_HOMING_REQUIRED);
+    dgus_screen_handler.SetMessageLinePGM(NUL_STR, 1);
+    dgus_screen_handler.SetMessageLinePGM(DGUS_MSG_HOMING, 2);
+    dgus_screen_handler.SetMessageLinePGM(NUL_STR, 3);
+    dgus_screen_handler.SetMessageLinePGM(NUL_STR, 4);
+    dgus_screen_handler.ShowWaitScreen(DGUS_Screen::LEVELING_PROBING);
 
-  #if ENABLED(AUTO_BED_LEVELING_UBL)
-    queue.enqueue_now_P(PSTR("G29P1\nG29P3\nG29P5C"));
-  #else
-    queue.enqueue_now_P(PSTR("G29"));
-  #endif
+    queue.enqueue_now_P(DGUS_CMD_HOME);
+    return;
+  }
+
+//  dgus_screen_handler.TriggerScreenChange(DGUS_Screen::LEVELING_PROBING);
+
+  // #if ENABLED(AUTO_BED_LEVELING_UBL)
+  //   queue.enqueue_now_P(PSTR("G29P1\nG29P3\nG29P5C"));
+  // #else
+  //   queue.enqueue_now_P(PSTR("G29"));
+  // #endif
 //  queue.enqueue_now_P(DGUS_CMD_EEPROM_SAVE);
 }
-
-void DGUSRxHandler::DisableABL(DGUS_VP &vp, void *data_ptr)
-{
-  UNUSED(vp);
-  UNUSED(data_ptr);
-
-  if (!dgus_screen_handler.IsPrinterIdle())
-  {
-    dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_BUSY);
-    return;
-  }
-
-  ExtUI::setLevelingActive(false);
-
-//  dgus_screen_handler.TriggerEEPROMSave();
-  dgus_screen_handler.TriggerFullUpdate();
-}
+#endif
 
 void DGUSRxHandler::FilamentSelect(DGUS_VP &vp, void *data_ptr)
 {

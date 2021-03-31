@@ -44,6 +44,7 @@ DGUS_Data::StepSize DGUSScreenHandler::offset_steps = DGUS_Data::StepSize::MMP1;
 DGUS_Data::StepSize DGUSScreenHandler::move_steps = DGUS_Data::StepSize::MM10;
 
 uint16_t DGUSScreenHandler::probing_icons[] = { 0, 0 };
+uint8_t DGUSScreenHandler::levelingPoint = 0;
 
 DGUS_Data::Extruder DGUSScreenHandler::filament_extruder = DGUS_Data::Extruder::CURRENT;
 uint16_t DGUSScreenHandler::filament_length = DGUS_DEFAULT_FILAMENT_LEN;
@@ -165,6 +166,7 @@ void DGUSScreenHandler::Loop() {
     return;
   }
 
+#if HAS_LEVELING
   if (current_screen == DGUS_Screen::LEVELING_PROBING
       && IsPrinterIdle()) {
     dgus_display.PlaySound(3);
@@ -176,6 +178,7 @@ void DGUSScreenHandler::Loop() {
     MoveToScreen(DGUS_Screen::LEVELING_AUTOMATIC);
     return;
   }
+#endif
 
   if (status_expire > 0 && ELAPSED(ms, status_expire)) {
     SetStatusMessagePGM(NUL_STR, 0);
@@ -235,8 +238,9 @@ void DGUSScreenHandler::StoreSettings(char *buff) {
   data.initialized = true;
   data.volume = dgus_display.GetVolume();
   data.brightness = dgus_display.GetBrightness();
+#if HAS_LEVELING
   data.abl = (ExtUI::getLevelingActive() && ExtUI::getMeshValid());
-
+#endif
   memcpy(buff, &data, sizeof(data));
 }
 
@@ -250,11 +254,13 @@ void DGUSScreenHandler::LoadSettings(const char *buff) {
   dgus_display.SetVolume(data.initialized ? data.volume : DGUS_DEFAULT_VOLUME);
   dgus_display.SetBrightness(data.initialized ? data.brightness : DGUS_DEFAULT_BRIGHTNESS);
 
+#if HAS_LEVELING
   if (data.initialized) {
     leveling_active = (data.abl && ExtUI::getMeshValid());
 
     ExtUI::setLevelingActive(leveling_active);
   }
+#endif
 }
 
 void DGUSScreenHandler::ConfigurationStoreWritten(bool success) {
@@ -287,6 +293,47 @@ void DGUSScreenHandler::PlayTone(const uint16_t frequency, const uint16_t durati
   }
 }
 
+void DGUSScreenHandler::MoveToLevelPoint() {
+  constexpr float lfrb[4] = LEVEL_CORNERS_INSET_LFRB;
+  float x, y;
+
+  switch (levelingPoint)
+  {
+  default:
+    return;
+  case 1:
+    x = DGUS_LEVEL_CENTER_X;
+    y = DGUS_LEVEL_CENTER_Y;
+    break;
+  case 2:
+    x = X_MIN_POS + lfrb[0];
+    y = Y_MIN_POS + lfrb[1];
+    break;
+  case 3:
+    x = X_MAX_POS - lfrb[2];
+    y = Y_MIN_POS + lfrb[1];
+    break;
+  case 4:
+    x = X_MAX_POS - lfrb[2];
+    y = Y_MAX_POS - lfrb[3];
+    break;
+  case 5:
+    x = X_MIN_POS + lfrb[0];
+    y = Y_MAX_POS - lfrb[3];
+    break;
+  };
+
+  if (ExtUI::getAxisPosition_mm(ExtUI::Z) < Z_MIN_POS + LEVEL_CORNERS_Z_HOP)
+  {
+    ExtUI::setAxisPosition_mm(Z_MIN_POS + LEVEL_CORNERS_Z_HOP, ExtUI::Z);
+  }
+  ExtUI::setAxisPosition_mm(x, ExtUI::X);
+  ExtUI::setAxisPosition_mm(y, ExtUI::Y);
+  ExtUI::setAxisPosition_mm(Z_MIN_POS + LEVEL_CORNERS_HEIGHT, ExtUI::Z);
+  levelingPoint = 0;
+}
+
+#if HAS_LEVELING
 void DGUSScreenHandler::MeshUpdate(const int8_t xpos, const int8_t ypos) {
   // if (current_screen == DGUS_Screen::LEVELING_PROBING || current_screen == DGUS_Screen::LEVELING_AUTOMATIC) {
   //   TriggerFullUpdate();
@@ -303,6 +350,7 @@ void DGUSScreenHandler::MeshUpdate(const int8_t xpos, const int8_t ypos) {
 
   TriggerFullUpdate();
 }
+#endif
 
 void DGUSScreenHandler::PrintTimerStarted() {
   TriggerScreenChange(DGUS_Screen::PRINT_STATUS);

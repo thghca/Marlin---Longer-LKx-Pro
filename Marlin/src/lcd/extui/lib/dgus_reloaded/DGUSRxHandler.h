@@ -51,15 +51,16 @@ namespace DGUSRxHandler {
 
   void Steppers(DGUS_VP &, void *);
   void RunoutControl(DGUS_VP &, void *);
-
+#if HAS_LEVELING
   void ZOffset(DGUS_VP &, void *);
   void ZOffsetStep(DGUS_VP &, void *);
   void ZOffsetSetStep(DGUS_VP &, void *);
-
+#endif
   void MoveToPoint(DGUS_VP &, void *);
 
+#if HAS_LEVELING
   void Probe(DGUS_VP &, void *);
-  void DisableABL(DGUS_VP &, void *);
+#endif
 
   void FilamentSelect(DGUS_VP &, void *);
   void FilamentLength(DGUS_VP &, void *);

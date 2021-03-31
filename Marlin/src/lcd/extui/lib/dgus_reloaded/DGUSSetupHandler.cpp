@@ -64,57 +64,38 @@ bool DGUSSetupHandler::PrintAdjust() {
   return false;
 }
 
-bool DGUSSetupHandler::LevelingMenu() {
-  ExtUI::setLevelingActive(dgus_screen_handler.leveling_active);
+bool DGUSSetupHandler::LevelingManual() {
+#if HAS_LEVELING
+  ExtUI::setLevelingActive(false);
+#endif
+
 
   if (!dgus_screen_handler.IsPrinterIdle()) {
     dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_BUSY);
     return false;
   }
 
-  if (ExtUI::isPositionKnown()) {
-    if (ExtUI::getAxisPosition_mm(ExtUI::Z) < 10.0f) {
-      queue.enqueue_now_P(PSTR("G0Z10"));
-    }
-
-    return true;
+  if( dgus_screen_handler.levelingPoint > 0) {
+    // move to selected point
+    dgus_screen_handler.MoveToLevelPoint();
   }
-
-  dgus_screen_handler.SetMessageLinePGM(NUL_STR, 1);
-  dgus_screen_handler.SetMessageLinePGM(DGUS_MSG_HOMING, 2);
-  dgus_screen_handler.SetMessageLinePGM(NUL_STR, 3);
-  dgus_screen_handler.SetMessageLinePGM(NUL_STR, 4);
-  dgus_screen_handler.ShowWaitScreen(DGUS_Screen::LEVELING_MENU);
-
-  queue.enqueue_now_P(DGUS_CMD_HOME);
-
-  return false;
+  return true;
 }
 
-bool DGUSSetupHandler::LevelingManual() {
-  ExtUI::setLevelingActive(false);
-
-  if (ExtUI::isPositionKnown()) {
-    return true;
-  }
+#if HAS_LEVELING
+bool DGUSSetupHandler::LevelingMenu() {
 
   if (!dgus_screen_handler.IsPrinterIdle()) {
     dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_BUSY);
     return false;
   }
 
-  dgus_screen_handler.SetMessageLinePGM(NUL_STR, 1);
-  dgus_screen_handler.SetMessageLinePGM(DGUS_MSG_HOMING, 2);
-  dgus_screen_handler.SetMessageLinePGM(NUL_STR, 3);
-  dgus_screen_handler.SetMessageLinePGM(NUL_STR, 4);
-  dgus_screen_handler.ShowWaitScreen(DGUS_Screen::LEVELING_MANUAL);
-
-  queue.enqueue_now_P(DGUS_CMD_HOME);
-
-  return false;
+  return true;
 }
 
 bool DGUSSetupHandler::LevelingOffset() {
+  ExtUI::setLevelingActive(dgus_screen_handler.leveling_active);
+
   dgus_screen_handler.offset_steps = DGUS_Data::StepSize::MMP1;
 
   if (!dgus_screen_handler.IsPrinterIdle()) {
@@ -161,8 +142,15 @@ bool DGUSSetupHandler::LevelingProbing() {
   dgus_screen_handler.probing_icons[0] = 0;
   dgus_screen_handler.probing_icons[1] = 0;
 
+  #if ENABLED(AUTO_BED_LEVELING_UBL)
+    queue.enqueue_now_P(PSTR("G29P1\nG29P3\nG29P5C"));
+  #else
+    queue.enqueue_now_P(PSTR("G29"));
+  #endif
+
   return true;
 }
+#endif
 
 bool DGUSSetupHandler::Filament() {
   dgus_screen_handler.filament_extruder = DGUS_Data::Extruder::CURRENT;
