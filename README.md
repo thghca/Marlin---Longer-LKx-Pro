@@ -22,6 +22,8 @@ I wanted more features and a more consistent look on the touchscreen. I made the
 - Enabled power loss recovery by default.
 - Works with non-BLtouch printers
 
+You can see some screenshots here https://github.com/Guizz27/DWIN_LK4Pro/tree/main/Screenshots.
+
 Integrated all changes from https://github.com/Desuuuu/Marlin and https://github.com/MarlinFirmware/Marlin to stay up to date with Marlin and the Reloaded screens updates.
 
 Releases will contain the touchscreen firmware that matches. If you want the source of the screen firmware you can find it here https://github.com/Guizz27/DWIN_LK4Pro.
