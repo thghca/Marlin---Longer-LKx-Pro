@@ -152,7 +152,7 @@
                                   DGUS_Control::SCROLL_UP);
     }
 
-    if (dgus_screen_handler.filelist_offset + DGUS_FILE_COUNT < dgus_screen_handler.filelist.count() - 1) {
+    if (dgus_screen_handler.filelist_offset + DGUS_FILE_COUNT < dgus_screen_handler.filelist.count()) {
       icons |= (uint16_t)DGUS_Data::ScrollIcon::DOWN;
 
       dgus_display.EnableControl(DGUS_Screen::PRINT,

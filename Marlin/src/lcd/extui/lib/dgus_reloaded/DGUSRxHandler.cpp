@@ -162,9 +162,9 @@ void DGUSRxHandler::Scroll(DGUS_VP &vp, void *data_ptr)
     break;
 
   case DGUS_Data::Scroll::DOWN:
-    if (dgus_screen_handler.filelist_offset + offset + DGUS_FILE_COUNT >= dgus_screen_handler.filelist.count())
+    if (dgus_screen_handler.filelist_offset + offset >= dgus_screen_handler.filelist.count())
     {
-      offset = (dgus_screen_handler.filelist.count() - DGUS_FILE_COUNT) - offset;
+      offset = dgus_screen_handler.filelist.count() - offset;
     }
 
     dgus_screen_handler.filelist_offset += offset;
