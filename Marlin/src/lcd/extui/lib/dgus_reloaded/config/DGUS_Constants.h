@@ -30,7 +30,7 @@
 #endif
 
 #ifndef DGUS_DEFAULT_VOLUME
-  #define DGUS_DEFAULT_VOLUME 50
+  #define DGUS_DEFAULT_VOLUME 100
 #endif
 
 #ifndef DGUS_DEFAULT_BRIGHTNESS
