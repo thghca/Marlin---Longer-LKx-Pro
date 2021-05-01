@@ -123,15 +123,17 @@ namespace ExtUI {
   }
 
   #if HAS_MESH
-    void onMeshUpdate(const int8_t xpos, const int8_t ypos, const float zval) {
+    void onMeshUpdate(const int8_t xpos, const int8_t ypos, const_float_t zval) {
       dgus_screen_handler.MeshUpdate(xpos, ypos);
     }
 
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const ExtUI::probe_state_t state) {
-      if (state == PROBE_FINISH) {
+      if (state == ExtUI::probe_state_t::G29_POINT_FINISH) {
         dgus_screen_handler.MeshUpdate(xpos, ypos);
       }
     }
+
+    void onMeshLevelingStart() {}
   #endif
 
   #if ENABLED(POWER_LOSS_RECOVERY)
@@ -153,6 +155,18 @@ namespace ExtUI {
   {
     dgus_screen_handler.ShowPauseMessage(message, mode);
   }
+
+  void onSteppersDisabled() {}
+  void onSteppersEnabled() {}
+
+  void onHomingStart() {}
+  void onHomingComplete() {}
+
+  void onPrintFinished() {
+    dgus_screen_handler.PrintFinished(); 
+  }
+
+  void onPostprocessSettings() {}
 }
 
 

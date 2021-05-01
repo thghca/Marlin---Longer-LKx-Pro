@@ -270,17 +270,17 @@ void DGUSTxHandler::Flowrate(DGUS_VP &vp) {
     default: return;
     case DGUS_Addr::ADJUST_Flowrate_CUR:
       #if EXTRUDERS > 1
-        flowrate = ExtUI::getFlowPercentage(ExtUI::getActiveTool());
+        flowrate = ExtUI::getFlow_percent(ExtUI::getActiveTool());
       #else
-        flowrate = ExtUI::getFlowPercentage(ExtUI::E0);
+        flowrate = ExtUI::getFlow_percent(ExtUI::E0);
       #endif
       break;
     #if EXTRUDERS > 1
       case DGUS_Addr::ADJUST_Flowrate_E0:
-        flowrate = ExtUI::getFlowPercentage(ExtUI::E0);
+        flowrate = ExtUI::getFlow_percent(ExtUI::E0);
         break;
       case DGUS_Addr::ADJUST_Flowrate_E1:
-        flowrate = ExtUI::getFlowPercentage(ExtUI::E1);
+        flowrate = ExtUI::getFlow_percent(ExtUI::E1);
         break;
     #endif
   }

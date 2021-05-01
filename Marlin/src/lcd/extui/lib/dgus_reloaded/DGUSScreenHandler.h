@@ -51,9 +51,10 @@ public:
   static void PrintTimerStarted();
   static void PrintTimerPaused();
   static void PrintTimerStopped();
+  static void PrintFinished();
   static void FilamentRunout(const ExtUI::extruder_t extruder);
 
-  #if ENABLED(SDSUPPORT)
+#if ENABLED(SDSUPPORT)
     /// Marlin informed us that a new SD has been inserted.
     static void SDCardInserted();
     /// Marlin informed us that the SD Card has been removed().

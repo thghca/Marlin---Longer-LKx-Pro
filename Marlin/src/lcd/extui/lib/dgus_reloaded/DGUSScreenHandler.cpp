@@ -108,7 +108,7 @@ const char DGUS_MSG_HOMING_REQUIRED[] PROGMEM = "Homing necessary...",
 const char DGUS_CMD_HOME[] PROGMEM = "G28",
            DGUS_CMD_EEPROM_SAVE[] PROGMEM = "M500";
 
-PauseMode pause_mode = PAUSE_MODE_PAUSE_PRINT;
+//PauseMode pause_mode = PAUSE_MODE_PAUSE_PRINT;
 
 void DGUSScreenHandler::Init() {
   dgus_display.Init();
@@ -363,6 +363,9 @@ void DGUSScreenHandler::PrintTimerPaused() {
 }
 
 void DGUSScreenHandler::PrintTimerStopped() {
+}
+
+void DGUSScreenHandler::PrintFinished() {
   if (current_screen != DGUS_Screen::PRINT_STATUS
       && current_screen != DGUS_Screen::PRINT_ADJUST) {
     return;
