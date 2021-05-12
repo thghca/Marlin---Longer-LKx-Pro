@@ -363,17 +363,15 @@ void DGUSScreenHandler::PrintTimerPaused() {
 }
 
 void DGUSScreenHandler::PrintTimerStopped() {
-}
-
-void DGUSScreenHandler::PrintFinished() {
   if (current_screen != DGUS_Screen::PRINT_STATUS
       && current_screen != DGUS_Screen::PRINT_ADJUST) {
     return;
   }
-
   dgus_display.PlaySound(3);
-
   TriggerScreenChange(DGUS_Screen::PRINT_FINISHED);
+}
+
+void DGUSScreenHandler::PrintFinished() {
 }
 
 void DGUSScreenHandler::FilamentRunout(const ExtUI::extruder_t extruder) {
