@@ -191,14 +191,11 @@
 
 void DGUSTxHandler::PositionZ(DGUS_VP &vp) {
   DEBUG_ECHOLNPAIR("posz getaxis ", planner.get_axis_position_mm(Z_AXIS), " current ", current_position.z, " planner ", planner.position.z);
-  float position = ExtUI::isAxisPositionKnown(ExtUI::Z) ?
+  float position = ExtUI::isAxisPositionKnown(ExtUI::Z) ? current_position.z : 0;
                                                         //planner.get_axis_position_mm(Z_AXIS)
-                       current_position.z
-                                                        //planner.position.z
-                                                        : 0;
 
-  const int16_t data = dgus_display.ToFixedPoint<float, int16_t, 1>(position);
-  dgus_display.Write((uint16_t)vp.addr, Swap16(data));
+  const int32_t data = dgus_display.ToFixedPoint<float, int32_t, 2>(position);
+  dgus_display.Write((uint16_t)vp.addr, dgus_display.SwapBytes(data));
 }
 
 void DGUSTxHandler::Ellapsed(DGUS_VP &vp) {

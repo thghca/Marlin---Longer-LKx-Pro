@@ -150,7 +150,6 @@ enum class DGUS_Addr : uint16_t {
   SD_FileName4              = 0x30A5, // 0x30A5 - 0x30C4
   SD_ScrollIcons            = 0x30C5, // Bits: DGUS_Data::ScrollIcon
   SD_SelectedFileName       = 0x30C6, // 0x30C6 - 0x30E5
-  STATUS_PositionZ          = 0x30E6, // Type: Fixed point, 1 decimal (16 bits signed)
   STATUS_Ellapsed           = 0x30E7, // 0x30E7 - 0x30F5
   STATUS_Percent            = 0x30F6, // Type: Integer (16 bits unsigned)
 //  STATUS_Icons              = 0x30F7, // Bits: DGUS_Data::StatusIcon
@@ -174,6 +173,7 @@ enum class DGUS_Addr : uint16_t {
 //  STEPPER_Status            = 0x3105, // Data: DGUS_Data::Status
   LEVEL_OFFSET_Current      = 0x3106, // Type: Fixed point, 2 decimals (16 bits signed)
   LEVEL_OFFSET_StepIcons    = 0x3107, // Bits: DGUS_Data::StepIcon
+  STATUS_PositionZ          = 0x3108, // Long 2 Words 0x3108-0x3109  old value 0x30E6, // Type: Fixed point, 1 decimal (16 bits signed)
 //  LEVEL_AUTO_DisableIcon    = 0x3108, // Data: DGUS_Data::Status
 //  LEVEL_AUTO_Grid           = 0x3109, // 0x3109 - 0x3121 / Type: Fixed point, 3 decimals (16 bits signed)
   // LEVEL_PROBING_Icons1      = 0x3122, // Type: Integer (16 bits unsigned) / Each bit represents a grid point
