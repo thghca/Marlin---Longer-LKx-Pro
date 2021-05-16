@@ -638,6 +638,7 @@ void DGUSTxHandler::FanSpeed(DGUS_VP &vp) {
 }
 
 void DGUSTxHandler::FeedrateMMS(DGUS_VP &vp) {
+// TODO: Read value from planner/stepper?
   const int16_t data = dgus_display.ToFixedPoint<float, int16_t, 0>(MMS_SCALED(feedrate_mm_s));
   dgus_display.Write((uint16_t)vp.addr, Swap16(data));
 }

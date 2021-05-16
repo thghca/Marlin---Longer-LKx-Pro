@@ -97,7 +97,7 @@
 #define LK4_Pro  //  for LK4pro
 #define LK4_Pro_BLTOUCH
 
-#define LKPro_VERSION "1.0-Beta3"
+#define LKPro_VERSION "1.0-RC3"
 #define LCD_HEIGHT 4  // number of message lines in the wait screen
 //#define DEBUG_DGUSLCD
 //#define FILAMENT_RUNOUT_SENSOR_DEBUG
