@@ -275,6 +275,7 @@ bool load_filament(const_float_t slow_load_length/*=0*/, const_float_t fast_load
           #else
             pause_menu_response = PAUSE_RESPONSE_WAIT_FOR;
           #endif
+          TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_OPTION, PAUSE_MODE_SAME));
           while (pause_menu_response == PAUSE_RESPONSE_WAIT_FOR) idle_no_sleep();
         }
       #endif
@@ -329,9 +330,7 @@ bool unload_filament(const_float_t unload_length, const bool show_lcd/*=false*/,
 
   if (!ensure_safe_temperature(false, mode)) {
     if (show_lcd) ui.pause_show_message(PAUSE_MESSAGE_STATUS);
-      return false;
     TERN_(EXTENSIBLE_UI, ExtUI::onPauseMessage(PAUSE_MESSAGE_STATUS, PAUSE_MODE_SAME));
-
     return false;
   }
 

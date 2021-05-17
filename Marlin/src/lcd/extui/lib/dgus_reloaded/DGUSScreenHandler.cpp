@@ -438,7 +438,7 @@ void DGUSScreenHandler::FilamentRunout(const ExtUI::extruder_t extruder) {
 
 #endif // HAS_PID_HEATING
 
-// Pause message - equivalent of lcd_pause_show_message()
+// Pause message - equivalent of ui.pause_show_message()
 void DGUSScreenHandler::ShowPauseMessage(PauseMessage message, PauseMode mode)
 {
   PGM_P msg = NUL_STR;
@@ -487,12 +487,11 @@ void DGUSScreenHandler::ShowPauseMessage(PauseMessage message, PauseMode mode)
       msg = GET_TEXT(MSG_FILAMENT_CHANGE_LOAD);
       break;
     case PAUSE_MESSAGE_PURGE:
+    #if ENABLED(ADVANCED_PAUSE_CONTINUOUS_PURGE)
+      msg = GET_TEXT(MSG_FILAMENT_CHANGE_CONT_PURGE);
+    #else
       msg = GET_TEXT(MSG_FILAMENT_CHANGE_PURGE);
-  // #if ENABLED(ADVANCED_PAUSE_CONTINUOUS_PURGE)
-  //   _lcd_pause_message(GET_TEXT(MSG_FILAMENT_CHANGE_CONT_PURGE));
-  // #else
-  //   _lcd_pause_message(GET_TEXT(MSG_FILAMENT_CHANGE_PURGE));
-  // #endif
+    #endif
       break;
     case PAUSE_MESSAGE_RESUME:
       msg = GET_TEXT(MSG_FILAMENT_CHANGE_RESUME);
@@ -505,8 +504,7 @@ void DGUSScreenHandler::ShowPauseMessage(PauseMessage message, PauseMode mode)
       msg = GET_TEXT(MSG_FILAMENT_CHANGE_HEATING);
       break;
     case PAUSE_MESSAGE_OPTION:
-      //pause_menu_response = PAUSE_RESPONSE_WAIT_FOR;
-      //return menu_pause_option;
+      pause_menu_response = PAUSE_RESPONSE_RESUME_PRINT; // continue without asking user
       break;
     case PAUSE_MESSAGE_STATUS:
       break;
