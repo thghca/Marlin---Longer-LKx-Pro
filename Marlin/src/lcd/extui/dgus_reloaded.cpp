@@ -31,7 +31,7 @@
 #if ENABLED(DGUS_LCD_UI_RELOADED)
 
 #include "ui_api.h"
-#include "lib/dgus_reloaded/DGUSScreenHandler.h"
+#include "dgus_reloaded/DGUSScreenHandler.h"
 #include "../../MarlinCore.h"
 
 namespace ExtUI {
