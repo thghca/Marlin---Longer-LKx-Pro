@@ -97,7 +97,7 @@
 #define LK4_Pro  //  for LK4pro
 #define LK4_Pro_BLTOUCH
 
-#define LKPro_VERSION "G1RC3"
+#define LKPro_VERSION "G1RC4"
 #define LCD_HEIGHT 4  // number of message lines in the wait screen
 //#define DEBUG_DGUSLCD
 //#define FILAMENT_RUNOUT_SENSOR_DEBUG
@@ -814,7 +814,11 @@
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
 #define X_MIN_ENDSTOP_INVERTING true //  For Alphawise and Longer U30 pro LK4 pro
 #define Y_MIN_ENDSTOP_INVERTING true //  For Alphawise and Longer U30 pro LK4 pro
-#define Z_MIN_ENDSTOP_INVERTING true //  For Alphawise and Longer U30 pro LK4 proo
+#if ENABLED(LK4_Pro_BLTOUCH)
+  #define Z_MIN_ENDSTOP_INVERTING false //  For Alphawise and Longer U30 pro LK4 proo
+#else
+  #define Z_MIN_ENDSTOP_INVERTING true //  For Alphawise and Longer U30 pro LK4 proo
+#endif
 #define I_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define J_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
 #define K_MIN_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
