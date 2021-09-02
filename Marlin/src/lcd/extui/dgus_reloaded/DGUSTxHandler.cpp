@@ -717,7 +717,7 @@ void DGUSTxHandler::JunctionDeviation(DGUS_VP &vp) {
 
 void DGUSTxHandler::LinearAdvance(DGUS_VP &vp) {
 #if ENABLED(LIN_ADVANCE)
-  const int16_t data = dgus_display.ToFixedPoint<float, int16_t, 2>(ExtUI::getLinearAdvance_mm_mm_s(ExtUI::extruder_t::E0)));
+  const int16_t data = dgus_display.ToFixedPoint<float, int16_t, 2>(ExtUI::getLinearAdvance_mm_mm_s(ExtUI::extruder_t::E0));
   dgus_display.Write((uint16_t)vp.addr, Swap16(data));
 #else
 #endif

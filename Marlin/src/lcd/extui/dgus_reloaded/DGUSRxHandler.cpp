@@ -1382,7 +1382,7 @@ void DGUSRxHandler::LinearAdvance(DGUS_VP &vp, void *data_ptr)
 #if ENABLED(LIN_ADVANCE)
   const int16_t data = Swap16(*(int16_t *)data_ptr);
   const float value = dgus_display.FromFixedPoint<int16_t, float, 2>(data);
-  ExtUI::setLinearAdvance_mm_mm_svalue, ExtUI::extruder_t::E0);
+  ExtUI::setLinearAdvance_mm_mm_s(value, ExtUI::extruder_t::E0);
 #else
   dgus_screen_handler.SetStatusMessagePGM(DGUS_MSG_FEATURE_NOT_ENABLED);
 #endif
