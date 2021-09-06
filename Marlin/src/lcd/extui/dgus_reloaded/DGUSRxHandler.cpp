@@ -190,7 +190,7 @@ void DGUSRxHandler::SelectFile(DGUS_VP &vp, void *data_ptr)
   {
     dgus_screen_handler.filelist_offset = 0;
     dgus_screen_handler.filelist_selected = -1;
-    dgus_screen_handler.filelist.changeDir(dgus_screen_handler.filelist.filename());
+    dgus_screen_handler.filelist.changeDir(dgus_screen_handler.filelist.shortFilename());
   }
   else
   {

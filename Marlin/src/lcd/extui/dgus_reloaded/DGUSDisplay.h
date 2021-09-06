@@ -149,6 +149,8 @@ private:
     DGUS_VERSION = 0x000f // OS/GUI version
   };
 
+  static void WriteString_int(uint16_t addr, const void* data_ptr, uint8_t size, bool isPGM=false, bool left = true, bool right = false, bool use_space = true);
+
   static void WriteHeader(uint16_t addr, uint8_t command, uint8_t len);
   static void ProcessRx();
 

@@ -180,12 +180,12 @@
   }
 
   void DGUSTxHandler::SelectedFileNameFormat(DGUS_VP &vp) {
-    if (dgus_screen_handler.filelist_selected < 0
-        || !dgus_screen_handler.filelist.seek(dgus_screen_handler.filelist_selected)) {
-      return;
-    }
-    uint16_t txtlen = _MIN(strlen(dgus_screen_handler.filelist.filename()), DGUS_FILENAME_LEN);
-    dgus_screen_handler.SetTextSize(vp.addr, txtlen, STATUS_Filename_Box, false);
+    // if (dgus_screen_handler.filelist_selected < 0
+    //     || !dgus_screen_handler.filelist.seek(dgus_screen_handler.filelist_selected)) {
+    //   return;
+    // }
+    //uint16_t txtlen = _MIN(strlen(dgus_screen_handler.filelist.filename()), DGUS_FILENAME_LEN);
+    //dgus_screen_handler.SetTextSize(vp.addr, txtlen, STATUS_Filename_Box, false);
   }
 #endif // SDSUPPORT
 

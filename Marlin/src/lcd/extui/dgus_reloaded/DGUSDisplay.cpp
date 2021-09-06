@@ -34,6 +34,7 @@
 
 #include "../ui_api.h"
 #include "../../../gcode/gcode.h"
+#include "../../fontutils.h"
 
 long map_precise(float x, long in_min, long in_max, long out_min, long out_max) {
   return LROUND((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
@@ -79,52 +80,21 @@ void DGUSDisplay::Write(uint16_t addr, const void* data_ptr, uint8_t size) {
 }
 
 void DGUSDisplay::WriteString(uint16_t addr, const void* data_ptr, uint8_t size, bool left, bool right, bool use_space) {
-  if (!data_ptr) return;
-
-  WriteHeader(addr, DGUS_WRITEVAR, size);
-
-  const char* data = static_cast<const char*>(data_ptr);
-  size_t len = strlen(data);
-  uint8_t left_spaces = 0;
-  uint8_t right_spaces = 0;
-
-  if (len < size) {
-    if (!len) {
-      right_spaces = size;
-    }
-    else if ((left && right) || (!left && !right)) {
-      left_spaces = (size - len) / 2;
-      right_spaces = size - len - left_spaces;
-    }
-    else if (left) {
-      right_spaces = size - len;
-    }
-    else {
-      left_spaces = size - len;
-    }
-  }
-  else {
-    len = size;
-  }
-
-  while (left_spaces--) {
-    LCD_SERIAL.write(' ');
-  }
-  while (len--) {
-    LCD_SERIAL.write(*data++);
-  }
-  while (right_spaces--) {
-    LCD_SERIAL.write(use_space ? ' ' : '\0');
-  }
+  WriteString_int(addr, data_ptr, size, false, left, right, use_space);
 }
 
 void DGUSDisplay::WriteStringPGM(uint16_t addr, const void* data_ptr, uint8_t size, bool left, bool right, bool use_space) {
+  WriteString_int(addr, data_ptr, size, true, left, right, use_space);
+}
+
+void DGUSDisplay::WriteString_int(uint16_t addr, const void* data_ptr, uint8_t size, bool isPGM, bool left, bool right, bool use_space){
   if (!data_ptr) return;
 
   WriteHeader(addr, DGUS_WRITEVAR, size);
 
-  const char* data = static_cast<const char*>(data_ptr);
-  size_t len = strlen_P(data);
+  uint8_t* data = (uint8_t*)(data_ptr);
+  size_t len = isPGM?utf8_strlen_P(static_cast<const char*>(data_ptr)):utf8_strlen(static_cast<const char*>(data_ptr));
+
   uint8_t left_spaces = 0;
   uint8_t right_spaces = 0;
 
@@ -151,12 +121,33 @@ void DGUSDisplay::WriteStringPGM(uint16_t addr, const void* data_ptr, uint8_t si
     LCD_SERIAL.write(' ');
   }
   while (len--) {
-    LCD_SERIAL.write(pgm_read_byte(data++));
+    uint8_t c='?';
+    uint8_t c1 = isPGM?pgm_read_byte(data):*data;
+    if(c1 < (uint8_t)0x7F){ //base ASCII
+      c = c1;
+      data++;
+    }
+    else //try  map to win1251
+    {
+      wchar_t unicode_c;     
+      data = get_utf8_value_cb(data,isPGM?read_byte_rom:read_byte_ram, &unicode_c);
+      if (unicode_c>>8==4){//Unicode page 4
+        c=unicode_c & 0x7F;
+        if(WITHIN(c, 0x10, 0x4f)){//Russian
+          c+= 176;
+        }else{
+          if(c == (L'Ё' & 0x7F)) c=168;
+          if(c == (L'ё' & 0x7F)) c=184;
+        }
+      }
+    }
+    LCD_SERIAL.write(c);
   }
   while (right_spaces--) {
     LCD_SERIAL.write(use_space ? ' ' : '\0');
   }
 }
+
 
 void DGUSDisplay::SwitchScreen(DGUS_Screen screen) {
   DEBUG_ECHOLNPAIR("SwitchScreen ", (uint8_t)screen);
